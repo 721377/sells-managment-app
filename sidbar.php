@@ -18,11 +18,13 @@
 
         <nav>
             <ul>
-                <li tabindex="0" class="list_focus">
-                    <span></span>
-                    <i class="bi bi-house sidicons"></i>
-                    <h3 class="font1">لوحة القيادة</h3>
-                </li>
+                <a href="index.php">
+                    <li tabindex="0" class="list_focus">
+                        <span></span>
+                        <i class="bi bi-house sidicons"></i>
+                        <h3 class="font1">لوحة القيادة</h3>
+                    </li>
+                </a>
                 <li onclick="handelarrowmove2()" tabindex="0" class="list_focus">
                     <span></span>
                     <i class="bi bi-basket3 sidicons"></i>
@@ -31,21 +33,21 @@
                     <img src="imgs/Creative-Arrow-PNG-Icon_b4yoq2.png" class="arrow2" alt="" />
                 </li>
                 <div class="commandes">
-                    <a onclick="checkPageWidth()">
+                    <a onclick="checkPageWidth()" href="commande_livrer.php">
                         <div class="inert">
                             <span></span>
                             <h4 class="font1">الطلبات التي سيتم تسليمها</h4>
                         </div>
                     </a>
 
-                    <a onclick="checkPageWidth()">
+                    <a onclick="checkPageWidth()" href="commande_normale.php">
                         <div class="inert">
                             <span></span>
                             <h4 class="font1">الطلبات عادية</h4>
                         </div>
                     </a>
 
-                    <a onclick="checkPageWidth()">
+                    <a onclick="checkPageWidth()" href="commande_finie.php">
                         <div class="inert">
                             <span></span>
                             <h4 class="font1">الطلبات المنتهية</h4>
@@ -59,7 +61,7 @@
                     <img src="imgs/Creative-Arrow-PNG-Icon_b4yoq2.png" class=" arrow1" alt="" />
                 </li>
                 <div class="Interventions">
-                    <a onclick="checkPageWidth()" href="client.php">
+                    <a onclick="checkPageWidth()" href="client_f.php">
                         <div class="inert">
                             <span></span>
 
@@ -67,7 +69,7 @@
                         </div>
                     </a>
 
-                    <a onclick="checkPageWidth()">
+                    <a onclick="checkPageWidth()" href="client_n.php">
                         <div class="inert">
                             <span></span>
 

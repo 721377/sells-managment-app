@@ -29,7 +29,7 @@ include 'sidbar.php';
 
             <a href="client.php" class="box cardcolor">
                 <i class="bi bi-person"></i>
-                <h2>les clients</h2>
+                <h2>زبائن أوفياء</h2>
                 <h1><?php //echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM client")) 
                     ?> 7</h1>
             </a>
@@ -38,7 +38,7 @@ include 'sidbar.php';
 
             <a href="client_non_payer.php" class="box cardcolor">
                 <i class="bi bi-person-x"></i>
-                <h2>clients non paye</h2>
+                <h2>زبائن الجدد</h2>
                 <h1><?php
                     // $expire_date = date("Y-m-d", strtotime("-30 days"));
                     // $expire = mysqli_query($conn, "SELECT * FROM `client` WHERE dat_ins <= '" . $expire_date . "'");
@@ -48,7 +48,7 @@ include 'sidbar.php';
 
             <a class="box">
                 <i class="bi bi-person-up"></i>
-                <h2>clients de ce mois</h2>
+                <h2>الطلبات قيد الشحن</h2>
                 <h1><?php
                     // $date = date("Y-m-d");
                     // $month = date('m', strtotime($date));
@@ -59,7 +59,7 @@ include 'sidbar.php';
 
             <a class="box">
                 <i class="bi bi-person-slash"></i>
-                <h2>client d'esactiver</h2>
+                <h2>معاملات الخاصة</h2>
                 <h1><?php
                     // $expire_date = date("Y-m-d", strtotime("-60 days"));
                     // $expire = mysqli_query($conn, "SELECT * FROM `client` WHERE dat_ins <= '" . $expire_date . "'");
