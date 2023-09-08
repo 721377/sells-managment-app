@@ -32,8 +32,8 @@ include 'sidbar.php';
     <div class="container">
 
         <div class="top">
-            <div class="titel">لائحة العملاء</div>
-            <!-- <div class="combo_icon">
+            <div class="titel">الطلبات التي سيتم تسليمها</div>
+            <div class="combo_icon">
                 <i class="bi bi-filter-circle"></i>
                 <div class="combobox">
                     <select id="sportFilter" name="" id="" class="select font3">
@@ -45,7 +45,7 @@ include 'sidbar.php';
 
                     </select>
                 </div>
-            </div> -->
+            </div>
             <div class="add">
                 <i class="bi bi-plus-circle"></i>
                 اضافة زبون
