@@ -23,7 +23,24 @@ include 'sidbar.php';
 </head>
 
 <body>
+    <div class="bl font1" id="form_det">
+        <div class="form-cont2">
+            <div class="icon-form">
+                <i class="bi bi-person-lines-fill"></i>
 
+            </div>
+            <div class="iformations">
+                <h1 id="nom_cli">
+                </h1>
+                <h3 id="age"></h3>
+                <h3 id="tele"></h3>
+                <h3 id="prix"></h3>
+                <h3 id="date"></h3>
+            </div>
+            <i class="bi bi-x-circle close-icon2"></i>
+
+        </div>
+    </div>
     <div class="sersh">
         <div class="group">
             <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
@@ -48,7 +65,7 @@ include 'sidbar.php';
             <div class="table">
                 <table>
                     <Thead>
-                        <th>العمليات</th>
+                        <th colspan="2">العمليات</th>
                         <th>مبلغ سلف</th>
                         <th> رقم الهاتف</th>
                         <th> اسم الزبون</th>
@@ -58,6 +75,7 @@ include 'sidbar.php';
 
                         <tr>
                             <td><a href=""><i class="bi bi-trash"></i></a></td>
+                            <td><a onclick="aff_det(<?php echo $row['id']; ?>);  handeldettactio() ;" class="det"> <i class="bi bi-eye "></i></a></td>
                             <td>20028</td>
                             <td>محمد لبيد</td>
                             <td>تانوية الكيندي</td>
@@ -97,6 +115,45 @@ include 'sidbar.php';
                     }
                 });
             });
+        });
+
+
+
+
+
+
+
+
+
+
+
+        const bl2 = document.querySelector("#form_det");
+        const close2 = document.querySelector(".close-icon2");
+        const det = document.querySelector('.det')
+
+        bl2.style.opacity = "0";
+        bl2.style.visibility = "hidden";
+        if (sessionStorage.getItem("det") === "false") {
+            sessionStorage.setItem("det", false);
+        }
+
+        function handeldettactio() {
+            bl2.style.opacity = "1";
+            bl2.style.visibility = "visible";
+            sessionStorage.setItem("det", true);
+        }
+
+        if (sessionStorage.getItem("det") === "true") {
+            bl2.style.opacity = "1";
+            bl2.style.visibility = "visible";
+        }
+
+        close2.addEventListener("click", function() {
+            bl2.style.opacity = "0";
+            bl2.style.visibility = "hidden";
+            sessionStorage.setItem("det", false);
+
+
         });
     </script>
 

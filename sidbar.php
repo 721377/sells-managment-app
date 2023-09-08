@@ -39,6 +39,7 @@
                     <a onclick="checkPageWidth()" href="commande_livrer.php">
                         <div class="inert">
                             <span></span>
+                            <i class="bi bi-person-workspace"></i>
                             <h4 class="font1">الطلبات التي سيتم تسليمها</h4>
                         </div>
                     </a>
@@ -46,6 +47,7 @@
                     <a onclick="checkPageWidth()" href="commande_normale.php">
                         <div class="inert">
                             <span></span>
+                            <i class="bi bi-person-video3"></i>
                             <h4 class="font1">الطلبات عادية</h4>
                         </div>
                     </a>
@@ -67,6 +69,7 @@
                     <a onclick="checkPageWidth()" href="client_f.php">
                         <div class="inert">
                             <span></span>
+                            <i class="bi bi-person-heart"></i>
 
                             <h4 class="font1">زبائن أوفياء</h4>
                         </div>
@@ -75,6 +78,7 @@
                     <a onclick="checkPageWidth()" href="client_n.php">
                         <div class="inert">
                             <span></span>
+                            <i class="bi bi-person"></i>
 
                             <h4 class="font1">زبائن الجدد</h4>
                         </div>
@@ -98,11 +102,13 @@
                 </a>
             </ul>
         </nav>
-        <div onclick="logout()" class="logaout">
-            <span></span>
-            <i class="sidicons bi bi-box-arrow-left"></i>
-            <h3 class="font1">تسجيل خروج</h3>
-        </div>
+        <a href="logout.php">
+            <div class="logaout">
+                <span></span>
+                <i class="sidicons bi bi-box-arrow-left"></i>
+                <h3 class="font1">تسجيل خروج</h3>
+            </div>
+        </a>
     </div>
 
     <script src="index.js"></script>

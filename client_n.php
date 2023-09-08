@@ -6,6 +6,8 @@ include 'config.php';
 if (!isset($_SESSION['user_name'])) {
     header('location:login_form.php');
 }
+
+$select = mysqli_query($conn, "SELECT * FROM `client` WHERE `type_c` ='nouveau' ORDER BY id DESC");
 include 'sidbar.php';
 ?>
 <!DOCTYPE html>
@@ -22,7 +24,82 @@ include 'sidbar.php';
 </head>
 
 <body>
+    <div class="bl font1" id="form_add">
+        <div class="form-cont">
+            <form action="" method="post">
+                <i class="bi bi-x-circle close-icon"></i>
+                <div class="icon-form">
+                    <i class="bi bi-person-add"></i>
 
+                </div>
+
+                <div class="txt_field">
+                    <input type="text" required id="" name="name" />
+                    <span></span>
+                    <label for=""> *الاسم الكامل</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" required id="" name="age" />
+                    <span></span>
+                    <label for=""> *رقم الهاتف </label>
+                </div>
+
+                <div class="txt_field">
+                    <input type="text" required id="" name="tele" />
+                    <span></span>
+                    <label for="">*مدينة </label>
+                </div>
+
+
+
+
+                <div class="txt_field">
+                    <input type="text" name="prix" required id="" />
+                    <span></span>
+                    <label for="">*عنوان </label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" name="prix" required id="" />
+                    <span></span>
+                    <label for="">المبلغ المقدم </label>
+                </div>
+
+
+                <button class="btn" type="submit" name="save">
+                    حفظ
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="bl font1" id="form_det">
+        <div class="form-cont2">
+            <form action="" method="post">
+                <i class="bi bi-x-circle close-icon2"></i>
+                <div class="icon-form">
+                    <i class="bi bi-node-plus"></i>
+                </div>
+
+                <div class="flex">
+                    <div class="txt_field">
+                        <input type="text" required id="" name="name" />
+                        <span></span>
+                        <label for=""> * كمية </label>
+                    </div>
+                    <div class="txt_field">
+                        <input type="text" required id="" name="name" />
+                        <span></span>
+                        <label for=""> * سلعة</label>
+                    </div>
+
+                </div>
+                <button class="btn" type="submit" name="save">
+                    حفظ
+                </button>
+            </form>
+        </div>
+    </div>
     <div class="sersh">
         <div class="group">
             <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
@@ -40,7 +117,7 @@ include 'sidbar.php';
         <div class="top">
             <div class="titel"> لائحة العملاء الجدد</div>
 
-            <div class="add">
+            <div class="add" id="add">
                 <i class="bi bi-plus-circle"></i>
                 اضافة زبون
             </div>
@@ -51,9 +128,9 @@ include 'sidbar.php';
                 <table>
                     <Thead>
                         <th colspan="3">العمليات</th>
+                        <th> المبلغ المقدم </th>
                         <th>عنوان</th>
                         <th>مدينة</th>
-                        <th>مبلغ سلف</th>
                         <th> رقم الهاتف</th>
                         <th> الاسم الكامل</th>
 
@@ -61,144 +138,22 @@ include 'sidbar.php';
                     </Thead>
 
                     <tbody>
-
-                        <tr>
-
-
-                            <td><a href=""><i class="bi bi-pen"></i></a>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-bag-plus"></i></a></td>
-
-                            <td>BK123425</td>
-                            <td>BK123425</td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
-
-                        </tr>
-
-                        <tr>
+                        <?php while ($row = mysqli_fetch_assoc($select)) { ?>
+                            <tr>
 
 
-                            <td><a href=""><i class="bi bi-pen"></i></a>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-bag-plus"></i></a></td>
+                                <td><a href="update_client.php?id=<?= $row['id'] ?>"><i class="bi bi-pen"></i></a></td>
+                                <td><a href="delete_client.php?id=<?= $row['id'] ?>"><i class="bi bi-trash"></i></a></td>
+                                <td><a class="det"><i class="bi bi-bag-plus "></i></a></td>
 
-                            <td>BK123425</td>
-                            <td>BK123425</td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
+                                <td><?= $row['avance'] ?></td>
+                                <td><?= $row['address'] ?></td>
+                                <td><?= $row['ville'] ?></td>
+                                <td><?= $row['tele'] ?> </td>
+                                <td><?= $row['name'] ?> </td>
 
-                        </tr>
-
-                        <tr>
-
-
-                            <td><a href=""><i class="bi bi-pen"></i></a>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-bag-plus"></i></a></td>
-
-                            <td>BK123425</td>
-                            <td>BK123425</td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
-
-                        </tr>
-
-                        <tr>
-
-
-                            <td><a href=""><i class="bi bi-pen"></i></a>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-bag-plus"></i></a></td>
-
-                            <td>BK123425</td>
-                            <td>BK123425</td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
-
-                        </tr>
-
-                        <tr>
-
-
-                            <td><a href=""><i class="bi bi-pen"></i></a>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-bag-plus"></i></a></td>
-
-                            <td>BK123425</td>
-                            <td>BK123425</td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
-
-                        </tr>
-
-                        <tr>
-
-
-                            <td><a href=""><i class="bi bi-pen"></i></a>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-bag-plus"></i></a></td>
-
-                            <td>BK123425</td>
-                            <td>BK123425</td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
-
-                        </tr>
-
-                        <tr>
-
-
-                            <td><a href=""><i class="bi bi-pen"></i></a>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-bag-plus"></i></a></td>
-
-                            <td>BK123425</td>
-                            <td>BK123425</td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
-
-                        </tr>
-
-                        <tr>
-
-
-                            <td><a href=""><i class="bi bi-pen"></i></a>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-bag-plus"></i></a></td>
-
-                            <td>BK123425</td>
-                            <td>BK123425</td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
-
-                        </tr>
-
-                        <tr>
-
-
-                            <td><a href=""><i class="bi bi-pen"></i></a>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-bag-plus"></i></a></td>
-
-                            <td>BK123425</td>
-                            <td>BK123425</td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
-
-                        </tr>
-
-
-
+                            </tr>
+                        <?php } ?>
 
                     </tbody>
                 </table>
@@ -232,6 +187,65 @@ include 'sidbar.php';
                     }
                 });
             });
+        });
+    </script>
+
+
+    <script>
+        const bl = document.querySelector("#form_add");
+        const close = document.querySelector(".close-icon");
+        const add = document.querySelector("#add");
+
+        if (sessionStorage.getItem("add") === "false") {
+            sessionStorage.setItem("add", false);
+        }
+
+        add.addEventListener("click", function() {
+            bl.style.opacity = "1";
+            bl.style.visibility = "visible";
+            sessionStorage.setItem("add", true);
+        });
+
+        if (sessionStorage.getItem("add") === "true") {
+            bl.style.opacity = "1";
+            bl.style.visibility = "visible";
+        }
+
+        close.addEventListener("click", function() {
+            bl.style.opacity = "0";
+            bl.style.visibility = "hidden";
+            sessionStorage.setItem("add", false);
+        });
+
+
+
+        const bl2 = document.querySelector("#form_det");
+        const close2 = document.querySelector(".close-icon2");
+        const det = document.querySelector('.det')
+
+        bl2.style.opacity = "0";
+        bl2.style.visibility = "hidden";
+        if (sessionStorage.getItem("det") === "false") {
+            sessionStorage.setItem("det", false);
+        }
+
+        det.addEventListener("click", function() {
+            bl2.style.opacity = "1";
+            bl2.style.visibility = "visible";
+            sessionStorage.setItem("det", true);
+        });
+
+        if (sessionStorage.getItem("det") === "true") {
+            bl2.style.opacity = "1";
+            bl2.style.visibility = "visible";
+        }
+
+        close2.addEventListener("click", function() {
+            bl2.style.opacity = "0";
+            bl2.style.visibility = "hidden";
+            sessionStorage.setItem("det", false);
+
+
         });
     </script>
 

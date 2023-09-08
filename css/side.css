@@ -11,47 +11,13 @@
 }
 .font1 {
   font-family: "login1";
-}
-
-.container {
-  width: 93%;
-  display: flex;
-  justify-content: right;
-}
-
-.container .user {
-  width: 20%;
-  display: flex;
-  justify-content: right;
-  align-items: center;
-  z-index: 11;
-}
-
-.user_img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-}
-
-.user_img img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.container .user .user_name {
-  margin-right: 15px;
-  font-size: 0.7em;
-  font-weight: 500;
   color: #949494;
 }
 
 /*sidbar*/
 
 .sidbar {
+  position: fixed;
   height: 100vh;
   overflow-x: hidden;
   box-shadow: 0px 0px 80px -15px rgba(0, 0, 0, 0.15);
@@ -59,10 +25,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  position: absolute;
   left: 0;
   top: 0;
-  z-index: 99999;
+  z-index: 99;
   background: white;
 }
 .sid1 {
@@ -155,7 +120,8 @@
 .sidbar nav ul li img {
   width: 10px;
   transition: 0.3s ease-in-out all;
-  margin-left: 130px;
+  position: absolute;
+  right: 20%;
 }
 
 .sidbar nav ul li h3 {
@@ -264,6 +230,7 @@
   padding-left: 40px;
   font-size: 0.8em;
   transition: 0.3s ease-in-out all;
+  color: black;
 }
 
 .inert span {
@@ -315,6 +282,7 @@
   font-size: 1.051em;
   padding-left: 28px;
   transition: 0.3s ease-in-out all;
+  color: black;
 }
 
 .sidbar .logaout span {

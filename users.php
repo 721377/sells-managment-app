@@ -23,6 +23,7 @@ include 'sidbar.php';
 
 <body>
 
+
     <div class="sersh">
         <div class="group">
             <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
@@ -62,11 +63,9 @@ include 'sidbar.php';
             <div class="table">
                 <table>
                     <Thead>
-                        <th colspan="3">العمليات</th>
-                        <th>عنوان</th>
-                        <th>مدينة</th>
-                        <th>مبلغ سلف</th>
-                        <th> رقم الهاتف</th>
+                        <th>العمليات</th>
+                        <th>دور </th>
+                        <th> بريد إلكتروني</th>
                         <th> الاسم الكامل</th>
 
 
@@ -77,139 +76,13 @@ include 'sidbar.php';
                         <tr>
 
 
-                            <td><a href=""><i class="bi bi-pen"></i></a>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-bag-plus"></i></a></td>
 
-                            <td>BK123425</td>
-                            <td>BK123425</td>
+                            <td><a href=""><i class="bi bi-trash"></i></a></td>
                             <td>20028</td>
                             <td>محمد لبيد</td>
                             <td>تانوية الكيندي</td>
 
                         </tr>
-
-                        <tr>
-
-
-                            <td><a href=""><i class="bi bi-pen"></i></a>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-bag-plus"></i></a></td>
-
-                            <td>BK123425</td>
-                            <td>BK123425</td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
-
-                        </tr>
-
-                        <tr>
-
-
-                            <td><a href=""><i class="bi bi-pen"></i></a>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-bag-plus"></i></a></td>
-
-                            <td>BK123425</td>
-                            <td>BK123425</td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
-
-                        </tr>
-
-                        <tr>
-
-
-                            <td><a href=""><i class="bi bi-pen"></i></a>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-bag-plus"></i></a></td>
-
-                            <td>BK123425</td>
-                            <td>BK123425</td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
-
-                        </tr>
-
-                        <tr>
-
-
-                            <td><a href=""><i class="bi bi-pen"></i></a>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-bag-plus"></i></a></td>
-
-                            <td>BK123425</td>
-                            <td>BK123425</td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
-
-                        </tr>
-
-                        <tr>
-
-
-                            <td><a href=""><i class="bi bi-pen"></i></a>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-bag-plus"></i></a></td>
-
-                            <td>BK123425</td>
-                            <td>BK123425</td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
-
-                        </tr>
-
-                        <tr>
-
-
-                            <td><a href=""><i class="bi bi-pen"></i></a>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-bag-plus"></i></a></td>
-
-                            <td>BK123425</td>
-                            <td>BK123425</td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
-
-                        </tr>
-
-                        <tr>
-
-
-                            <td><a href=""><i class="bi bi-pen"></i></a>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-bag-plus"></i></a></td>
-
-                            <td>BK123425</td>
-                            <td>BK123425</td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
-
-                        </tr>
-
-                        <tr>
-
-
-                            <td><a href=""><i class="bi bi-pen"></i></a>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-bag-plus"></i></a></td>
-
-                            <td>BK123425</td>
-                            <td>BK123425</td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
-
-                        </tr>
-
-
 
 
                     </tbody>
@@ -245,6 +118,10 @@ include 'sidbar.php';
             });
         });
     </script>
+
+
+
+
 
 
 </body>

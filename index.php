@@ -28,45 +28,31 @@ include 'sidbar.php';
         <div class="main-card">
 
             <a href="client_f.php" class="box cardcolor">
-                <i class="bi bi-person"></i>
+                <i class="bi bi-person-heart"></i>
                 <h2>زبائن أوفياء</h2>
-                <h1><?php //echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM client")) 
-                    ?> 7</h1>
+                <h1><?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM client WHERE `type_c` ='fidele'")) ?></h1>
             </a>
 
 
 
             <a href="client_n.php" class="box cardcolor">
-                <i class="bi bi-person-x"></i>
+                <i class="bi bi-person"></i>
                 <h2>زبائن الجدد</h2>
-                <h1><?php
-                    // $expire_date = date("Y-m-d", strtotime("-30 days"));
-                    // $expire = mysqli_query($conn, "SELECT * FROM `client` WHERE dat_ins <= '" . $expire_date . "'");
-                    // echo mysqli_num_rows($expire);
-                    ?></h1>
+                <h1><?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM client WHERE `type_c` ='nouveau'")) ?></h1>
             </a>
 
             <a class="box" href="etape_livraison.php">
-                <i class="bi bi-person-up"></i>
+                <i class="bi bi-truck"></i>
                 <h2>الطلبات قيد الشحن</h2>
-                <h1><?php
-                    // $date = date("Y-m-d");
-                    // $month = date('m', strtotime($date));
-                    // $expire = mysqli_query($conn, "SELECT * FROM `client` WHERE MONTH(dat_ins) = '$month'");
-                    // echo mysqli_num_rows($expire);
-                    ?></h1>
+                <h1><?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM commande_online WHERE `etape` ='etap2'")) ?></h1>
+
             </a>
 
             <a class="box" href="transactions_pr.php">
-                <i class="bi bi-person-slash"></i>
+                <i class="bi bi-person-fill-lock"></i>
                 <h2>معاملات الخاصة</h2>
-                <h1><?php
-                    // $expire_date = date("Y-m-d", strtotime("-60 days"));
-                    // $expire = mysqli_query($conn, "SELECT * FROM `client` WHERE dat_ins <= '" . $expire_date . "'");
-                    // echo mysqli_num_rows($expire);
-                    ?>
+                <h1><?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `fornisseur`")) ?></h1>
 
-                </h1>
             </a>
 
 

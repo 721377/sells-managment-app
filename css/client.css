@@ -136,6 +136,7 @@ td a i {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 td a .bi-pen {
   color: #3574ee;
@@ -146,6 +147,10 @@ td a .bi-bag-plus {
 td a .bi-trash {
   color: #fa3701;
 }
+td a .bi-eye {
+  color: #2ca24c;
+}
+
 td:hover .bi-bag-plus {
   background: #d0efdc;
 }
@@ -156,6 +161,10 @@ td:hover .bi-pen {
 
 td:hover .bi-trash {
   background: #f5dbd9;
+}
+
+td:hover .bi-eye {
+  background: #d0efdc;
 }
 
 .combobox select {
@@ -233,4 +242,236 @@ td:hover .bi-trash {
   fill: #9e9ea7;
   width: 1rem;
   height: 1rem;
+}
+/*form add*/
+
+.bl {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 0%;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.17);
+  backdrop-filter: blur(5.6px);
+  -webkit-backdrop-filter: blur(5.6px);
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.2s all ease-in-out;
+}
+
+.form-cont {
+  z-index: 111111111111;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 550px;
+  height: 570px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(236, 238, 242, 0.37);
+  overflow: hidden;
+}
+
+.form-cont2 {
+  z-index: 111111111111;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 570px;
+  height: 320px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(236, 238, 242, 0.37);
+  overflow: hidden;
+  padding: 0 30px;
+}
+
+.close-icon {
+  font-size: 25px;
+  position: absolute;
+  top: 3%;
+  right: 5%;
+  cursor: pointer;
+  transition: 0.2s all ease-in-out;
+}
+.close-icon:hover {
+  font-size: 27px;
+}
+
+.close-icon2 {
+  font-size: 25px;
+  position: absolute;
+  top: 3%;
+  right: 5%;
+  cursor: pointer;
+  transition: 0.2s all ease-in-out;
+}
+.close-icon2:hover {
+  font-size: 27px;
+}
+.icon-form {
+  position: relative;
+  right: -43%;
+  top: 20px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 8%;
+  border: 1px solid rgb(118, 212, 148);
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+}
+.icon-form i {
+  font-size: 50px;
+  color: rgb(118, 212, 148);
+}
+.form-cont form {
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+form .txt_field {
+  position: relative;
+  border-bottom: 1.5px solid #323439;
+  margin: 20px 0;
+}
+.txt_field input {
+  width: 100%;
+  padding: 0 5px;
+  height: 40px;
+  font-size: 15px;
+  border: none;
+  background: none;
+  outline: none;
+  text-align: right;
+}
+.flex {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 10px;
+  width: 100%;
+}
+
+.txt_field label {
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  color: #b4b8c1;
+  transform: translateY(-50%);
+  font-size: 17px;
+  pointer-events: none;
+  transition: 0.1s;
+}
+.txt_field span::before {
+  content: "";
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #d29100;
+}
+
+.txt_field input:focus ~ label,
+.txt_field input:valid ~ label {
+  top: -5px;
+  color: #323439;
+}
+.txt_field input:focus,
+.txt_field input:valid {
+  color: #323439;
+}
+.txt_field input:focus ~ span::before,
+.txt_field input:valid ~ span::before {
+  width: 100%;
+}
+
+.btn {
+  width: 100%;
+  height: 2.3em;
+  background: rgb(118, 212, 148);
+  color: white;
+  border: none;
+  border-radius: 0.625em;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+button:hover {
+  color: rgb(118, 212, 148);
+}
+
+button:after {
+  content: "";
+  background: white;
+  position: absolute;
+  z-index: -1;
+  left: -20%;
+  right: -20%;
+  top: 0;
+  bottom: 0;
+  transform: skewX(-45deg) scale(0, 1);
+  transition: all 0.5s;
+}
+
+button:hover:after {
+  transform: skewX(-45deg) scale(1, 1);
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.select {
+  position: relative;
+  border-bottom: 1.5px solid #323439;
+  margin: 20px 0;
+  width: 100%;
+}
+.select select {
+  width: 100%;
+  padding: 0 5px;
+  height: 40px;
+  font-size: 12px;
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 17px;
+  color: #b4b8c1;
+}
+
+.select label {
+  position: absolute;
+  left: 10px;
+  color: #b4b8c1;
+  top: -10px;
+}
+
+.select select:focus ~ label {
+  display: none;
+}
+
+@media (max-width: 570px) {
+  .form-cont {
+    width: 450px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-cont {
+    width: 300px;
+    height: 560px;
+  }
+  .txt_field label {
+    font-size: 13px;
+  }
+  .icon {
+    right: -30%;
+  }
 }
