@@ -18,7 +18,7 @@ include 'sidbar.php';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="css/client.css">
 
-    <title> العملاء الجدد</title>
+    <title> المستخدمين</title>
 </head>
 
 <body>
@@ -38,11 +38,23 @@ include 'sidbar.php';
     <div class="container">
 
         <div class="top">
-            <div class="titel"> لائحة العملاء الجدد</div>
+            <div class="titel">المستخدمين </div>
+            <div class="combo_icon">
+                <i class="bi bi-filter-circle"></i>
+                <div class="combobox">
+                    <select id="sportFilter" name="" id="" class="select font3">
+                        <option value="" disabled selected>sport</option>
+                        <option value="K1">K1</option>
+                        <option value="aikido">aikido</option>
+                        <option value="Box">Box</option>
+                        <option value="musculation">musculation</option>
 
+                    </select>
+                </div>
+            </div>
             <div class="add">
                 <i class="bi bi-plus-circle"></i>
-                اضافة زبون
+                اضافة المستخدم
             </div>
         </div>
         <div class="body">
@@ -212,7 +224,6 @@ include 'sidbar.php';
 
     </div>
 
-
     <!-- form the sersh -->
     <script>
         $(document).ready(function() {
@@ -234,6 +245,7 @@ include 'sidbar.php';
             });
         });
     </script>
+
 
 </body>
 

@@ -3,6 +3,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/side.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 </head>
 
 <body>
@@ -79,14 +82,14 @@
 
 
                 </div>
-                <a onclick="checkPageWidth()">
+                <a onclick="checkPageWidth()" href="credit.php">
                     <li tabindex="0" class="list_focus">
                         <span></span>
                         <i class="bi bi-cash sidicons"></i>
-                        <h3 class="font1">الاعتمادات</h3>
+                        <h3 class="font1">ائتمان</h3>
                     </li>
                 </a>
-                <a onclick="checkPageWidth()">
+                <a onclick="checkPageWidth()" href="users.php">
                     <li tabindex="0" class="list_focus">
                         <span></span>
                         <i class="bi bi-person-gear sidicons"></i>

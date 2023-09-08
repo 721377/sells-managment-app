@@ -27,7 +27,7 @@ include 'sidbar.php';
     <div class="main">
         <div class="main-card">
 
-            <a href="client.php" class="box cardcolor">
+            <a href="client_f.php" class="box cardcolor">
                 <i class="bi bi-person"></i>
                 <h2>زبائن أوفياء</h2>
                 <h1><?php //echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM client")) 
@@ -36,7 +36,7 @@ include 'sidbar.php';
 
 
 
-            <a href="client_non_payer.php" class="box cardcolor">
+            <a href="client_n.php" class="box cardcolor">
                 <i class="bi bi-person-x"></i>
                 <h2>زبائن الجدد</h2>
                 <h1><?php
@@ -46,7 +46,7 @@ include 'sidbar.php';
                     ?></h1>
             </a>
 
-            <a class="box">
+            <a class="box" href="etape_livraison.php">
                 <i class="bi bi-person-up"></i>
                 <h2>الطلبات قيد الشحن</h2>
                 <h1><?php
@@ -57,7 +57,7 @@ include 'sidbar.php';
                     ?></h1>
             </a>
 
-            <a class="box">
+            <a class="box" href="transactions_pr.php">
                 <i class="bi bi-person-slash"></i>
                 <h2>معاملات الخاصة</h2>
                 <h1><?php

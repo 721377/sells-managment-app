@@ -1,5 +1,11 @@
 <?php
+session_start();
 
+include 'config.php';
+
+if (!isset($_SESSION['user_name'])) {
+    header('location:login_form.php');
+}
 include 'sidbar.php';
 ?>
 <!DOCTYPE html>
@@ -12,10 +18,21 @@ include 'sidbar.php';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="css/client.css">
 
-    <title>client</title>
+    <title> الطلبات التي سيتم تسليمها</title>
 </head>
 
 <body>
+
+
+
+    <div class="bl font1" id="form_add">
+        <div class="form-cont">
+            <form action="" method="post">
+                <i class="bi bi-x-circle close-icon"></i>
+
+            </form>
+        </div>
+    </div>
 
     <div class="sersh">
         <div class="group">
@@ -32,7 +49,7 @@ include 'sidbar.php';
     <div class="container">
 
         <div class="top">
-            <div class="titel">الطلبات التي سيتم تسليمها</div>
+            <div class="titel"> الطلبات التي سيتم تسليمها</div>
             <div class="combo_icon">
                 <i class="bi bi-filter-circle"></i>
                 <div class="combobox">
@@ -48,7 +65,7 @@ include 'sidbar.php';
             </div>
             <div class="add">
                 <i class="bi bi-plus-circle"></i>
-                اضافة زبون
+                اضافة طلبية
             </div>
         </div>
         <div class="body">
@@ -220,7 +237,27 @@ include 'sidbar.php';
 
 
 
+    <!-- form the sersh -->
+    <script>
+        $(document).ready(function() {
+            $("#searchInput").on("keyup", function() {
+                var searchText = $(this).val().toLowerCase(); // Get the text from the input and convert it to lowercase
 
+                $("tbody tr ").each(function() {
+                    // Loop through each row in the tbody
+                    var rowText = $(this).text().toLowerCase(); // Get the text of the current row and convert it to lowercase
+
+                    if (rowText.indexOf(searchText) === -1) {
+                        // If the row text does not contain the search text, hide the row
+                        $(this).hide();
+                    } else {
+                        // Otherwise, show the row
+                        $(this).show();
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

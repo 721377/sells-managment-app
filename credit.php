@@ -19,7 +19,7 @@ include 'sidbar.php';
     <link rel="stylesheet" href="css/client.css">
 
 
-    <title> الطلبات المنتهية</title>
+    <title>ائتمان</title>
 </head>
 
 <body>
@@ -39,20 +39,8 @@ include 'sidbar.php';
     <div class="container">
 
         <div class="top">
-            <div class="titel"> الطلبات المنتهية</div>
-            <div class="combo_icon">
-                <i class="bi bi-filter-circle"></i>
-                <div class="combobox">
-                    <select id="sportFilter" name="" id="" class="select font3">
-                        <option value="" disabled selected>sport</option>
-                        <option value="K1">K1</option>
-                        <option value="aikido">aikido</option>
-                        <option value="Box">Box</option>
-                        <option value="musculation">musculation</option>
+            <div class="titel"> ائتمان </div>
 
-                    </select>
-                </div>
-            </div>
 
         </div>
         <div class="body">
@@ -61,10 +49,9 @@ include 'sidbar.php';
                 <table>
                     <Thead>
                         <th>العمليات</th>
-                        <th>نوع الطلبية</th>
-                        <th> شركة توصيل</th>
+                        <th>مبلغ سلف</th>
+                        <th> رقم الهاتف</th>
                         <th> اسم الزبون</th>
-
                     </Thead>
 
                     <tbody>

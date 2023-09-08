@@ -2,7 +2,6 @@
 session_start();
 
 include 'config.php';
-
 if (!isset($_SESSION['user_name'])) {
     header('location:login_form.php');
 }
@@ -18,7 +17,7 @@ include 'sidbar.php';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="css/client.css">
 
-    <title> العملاء الجدد</title>
+    <title> الطلبات قيد الشحن</title>
 </head>
 
 <body>
@@ -38,12 +37,9 @@ include 'sidbar.php';
     <div class="container">
 
         <div class="top">
-            <div class="titel"> لائحة العملاء الجدد</div>
+            <div class="titel"> الطلبات قيد الشحن</div>
 
-            <div class="add">
-                <i class="bi bi-plus-circle"></i>
-                اضافة زبون
-            </div>
+
         </div>
         <div class="body">
 
