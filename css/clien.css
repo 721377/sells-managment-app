@@ -5,14 +5,7 @@
   text-decoration: none;
 }
 
-table::-webkit-scrollbar-thumb {
-  background: #d0def2;
-  border-radius: 8px;
-}
-table::-webkit-scrollbar {
-  background: #ffff;
-  width: 8px;
-}
+
 .container {
   position: absolute;
   right: 0;
@@ -174,6 +167,17 @@ td:hover .bi-printer {
   background-color: #c6c9ca;
 }
 
+<<<<<<< HEAD
+=======
+.table::-webkit-scrollbar-thumb {
+  background: #d0def2;
+  border-radius: 8px;
+}
+.table::-webkit-scrollbar {
+  background: #ffff;
+  width: 8px;
+}
+>>>>>>> c7bc3cc8e92c1bc1f8e396ec82dc2d9f311bd183
 .combobox select {
   height: 30px;
   width: 200px;

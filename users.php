@@ -6,6 +6,48 @@ include 'config.php';
 if (!isset($_SESSION['user_name'])) {
     header('location:login_form.php');
 }
+
+$stmt = mysqli_stmt_init($conn);
+
+if (isset($_POST['save'])) {
+    $nom = $_POST['name'];
+    $email =  $_POST['tele'];
+    $pass = $_POST['m_tot'];
+    $rol = $_POST['rol'];
+
+
+
+
+
+    $select = "SELECT * FROM `users` WHERE `nom` = ?";
+    if (!mysqli_stmt_prepare($stmt, $select)) {
+        $error[] = "select is failed";
+    } else {
+        mysqli_stmt_bind_param($stmt, "s", $nom);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+    }
+        
+   
+
+        if (mysqli_num_rows($result) > 0) {
+            $error[] = "! المستخدم الموجود سابقا ";
+        } else {
+
+            $insert = "INSERT INTO `users`(`nom`, `email`, `pass`, `role`) VALUES (?,?,?,?);";
+            if (!mysqli_stmt_prepare($stmt, $insert)) {
+                $error[] = "insert is failed";
+            } else {
+                mysqli_stmt_bind_param($stmt, "sss", $nom_f, $tele, $monta, $rol);
+                mysqli_stmt_execute($stmt);
+                header('location:transaction_pr.php');
+            }
+        }
+    }
+
+    $select = mysqli_query($conn, "SELECT * FROM `users`  ORDER BY id DESC");
+
+
 include 'sidbar.php';
 ?>
 <!DOCTYPE html>
@@ -22,7 +64,48 @@ include 'sidbar.php';
 </head>
 
 <body>
+<div class="bl font1" id="form_add">
+        <div class="form-cont">
+            <form action="" method="post">
+                <i class="bi bi-x-circle close-icon"></i>
+                <div class="icon-form">
+                    <i class="bi bi-person-add"></i>
 
+                </div>
+
+                <div class="txt_field">
+                    <input type="text" required id="" name="name" />
+                    <span></span>
+                    <label for=""> *الاسم المستخدم</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" required id="" name="email" />
+                    <span></span>
+                    <label for=""> *بريد الكتروني</label>
+                </div>
+
+                <div class="txt_field">
+                    <input type="text" required id="" name="pass" />
+                    <span></span>
+                    <label for="">*كلمة السر</label>
+                </div>
+                <div class="txt_field">
+                    <select name="rol" id="">
+                    <option value="" disabled selected>دور</option>
+                        <option value="admin">admin</option>
+                        <option value="user">user</option>
+                    </select>
+                    
+                </div>
+
+
+
+                <button class="btn" type="submit" name="save">
+                    حفظ
+                </button>
+            </form>
+        </div>
+    </div>
 
     <div class="sersh">
         <div class="group">
@@ -40,19 +123,7 @@ include 'sidbar.php';
 
         <div class="top">
             <div class="titel">المستخدمين </div>
-            <div class="combo_icon">
-                <i class="bi bi-filter-circle"></i>
-                <div class="combobox">
-                    <select id="sportFilter" name="" id="" class="select font3">
-                        <option value="" disabled selected>sport</option>
-                        <option value="K1">K1</option>
-                        <option value="aikido">aikido</option>
-                        <option value="Box">Box</option>
-                        <option value="musculation">musculation</option>
-
-                    </select>
-                </div>
-            </div>
+            
             <div class="add">
                 <i class="bi bi-plus-circle"></i>
                 اضافة المستخدم
@@ -66,25 +137,26 @@ include 'sidbar.php';
                         <th>العمليات</th>
                         <th>دور </th>
                         <th> بريد إلكتروني</th>
+                        <th> كلمة السر</th>
                         <th> الاسم الكامل</th>
 
 
                     </Thead>
 
                     <tbody>
-
-                        <tr>
-
-
-
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
+                    <?php while ($row = mysqli_fetch_assoc($select)) { ?>
+                         <tr>
+                            
+                         <td><a href="delete-use.php<?= $row['id'] ?>"><i class="bi bi-trash"></i></a></td>
+                            <td><?= $row['role'] ?></td>
+                            <td><?= $row['email']  ?></td>
+                            <td><?= $row['pass']?></td>
+                            <td><?=  $row['nom']?></td>
+                            
 
                         </tr>
-
-
+                        
+                        <?php }?>
                     </tbody>
                 </table>
 
@@ -99,6 +171,33 @@ include 'sidbar.php';
 
     <!-- form the sersh -->
     <script>
+         
+        const bl = document.querySelector("#form_add");
+        const close = document.querySelector(".close-icon");
+        const add = document.querySelector("#add");
+
+        if (sessionStorage.getItem("add") === "false") {
+            sessionStorage.setItem("add", false);
+        }
+
+        add.addEventListener("click", function() {
+            bl.style.opacity = "1";
+            bl.style.visibility = "visible";
+            sessionStorage.setItem("add", true);
+        });
+
+        if (sessionStorage.getItem("add") === "true") {
+            bl.style.opacity = "1";
+            bl.style.visibility = "visible";
+        }
+
+        close.addEventListener("click", function() {
+            bl.style.opacity = "0";
+            bl.style.visibility = "hidden";
+            sessionStorage.setItem("add", false);
+        });
+
+
         $(document).ready(function() {
             $("#searchInput").on("keyup", function() {
                 var searchText = $(this).val().toLowerCase(); // Get the text from the input and convert it to lowercase
