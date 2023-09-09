@@ -5,14 +5,7 @@
   text-decoration: none;
 }
 
-table::-webkit-scrollbar-thumb {
-  background: #d0def2;
-  border-radius: 8px;
-}
-table::-webkit-scrollbar {
-  background: #ffff;
-  width: 8px;
-}
+
 .container {
   position: absolute;
   right: 0;
@@ -175,7 +168,14 @@ td:hover .bi-printer{
   background-color: #c6c9ca;
 }
 
-
+.table::-webkit-scrollbar-thumb {
+  background: #d0def2;
+  border-radius: 8px;
+}
+.table::-webkit-scrollbar {
+  background: #ffff;
+  width: 8px;
+}
 .combobox select {
   height: 30px;
   width: 200px;
