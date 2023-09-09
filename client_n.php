@@ -7,6 +7,44 @@ if (!isset($_SESSION['user_name'])) {
     header('location:login_form.php');
 }
 
+$stmt = mysqli_stmt_init($conn);
+
+if (isset($_POST['save'])) {
+    $name = $_POST['name'];
+    $prix =  $_POST['prix'];
+    $ville = $_POST['ville'];
+    $adr = $_POST['adr'];
+    $tele = $_POST['tele'];
+
+
+    $select = "SELECT * FROM `client` WHERE `name` = ?";
+    if (!mysqli_stmt_prepare($stmt, $select)) {
+        $error = "select is failed";
+    } else {
+        mysqli_stmt_bind_param($stmt, "s", $name);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+
+
+
+
+        if (mysqli_num_rows($result) > 0) {
+            $error = "العميل موجود بالفعل!";
+        } else {
+
+            $insert = "INSERT INTO `client`(`name`, `address`, `ville`, `tele`, `type_c`, `avance`) VALUES (?,?,?,?, 'nouveau',?);";
+            if (!mysqli_stmt_prepare($stmt, $insert)) {
+                $error = "insert is failed";
+            } else {
+                mysqli_stmt_bind_param($stmt, "sssss", $name, $adr, $ville, $tele, $prix);
+                mysqli_stmt_execute($stmt);
+                echo '<script> alert("تمت إضافة العميل بنجاح");</script>';
+            }
+        }
+    }
+}
+
 $select = mysqli_query($conn, "SELECT * FROM `client` WHERE `type_c` ='nouveau' ORDER BY id DESC");
 include 'sidbar.php';
 ?>
@@ -33,19 +71,26 @@ include 'sidbar.php';
 
                 </div>
 
+                <?php if (!empty($error)) : ?>
+                    <div class="error">
+                        <i class="bi bi-exclamation-circle"></i><?php echo $error; ?>
+                    </div>
+
+                <?php endif; ?>
+
                 <div class="txt_field">
                     <input type="text" required id="" name="name" />
                     <span></span>
                     <label for=""> *الاسم الكامل</label>
                 </div>
                 <div class="txt_field">
-                    <input type="text" required id="" name="age" />
+                    <input type="text" required id="" name="tele" />
                     <span></span>
                     <label for=""> *رقم الهاتف </label>
                 </div>
 
                 <div class="txt_field">
-                    <input type="text" required id="" name="tele" />
+                    <input type="text" required id="" name="ville" />
                     <span></span>
                     <label for="">*مدينة </label>
                 </div>
@@ -54,7 +99,7 @@ include 'sidbar.php';
 
 
                 <div class="txt_field">
-                    <input type="text" name="prix" required id="" />
+                    <input type="text" name="adr" required id="" />
                     <span></span>
                     <label for="">*عنوان </label>
                 </div>
@@ -75,7 +120,7 @@ include 'sidbar.php';
 
     <div class="bl font1" id="form_det">
         <div class="form-cont2">
-            <form action="" method="post">
+            <form action="add_commade.php" method="post">
                 <i class="bi bi-x-circle close-icon2"></i>
                 <div class="icon-form">
                     <i class="bi bi-node-plus"></i>
@@ -83,23 +128,41 @@ include 'sidbar.php';
 
                 <div class="flex">
                     <div class="txt_field">
-                        <input type="text" required id="" name="name" />
+                        <input type="text" required id="" name="art" />
                         <span></span>
                         <label for=""> * كمية </label>
                     </div>
                     <div class="txt_field">
-                        <input type="text" required id="" name="name" />
+                        <input type="text" required id="" name="qun" />
                         <span></span>
                         <label for=""> * سلعة</label>
                     </div>
 
                 </div>
+
+
+                <div class="container_rad">
+                    <div class="form">
+
+                        <label>
+                            <input type="radio" value="normale" name="type">
+                            <span> طلبية عادية </span>
+                        </label>
+                        <label>
+                            <input type="radio" value="livrer" name="type">
+                            <span> طلبية مسلمة </span>
+                        </label>
+                    </div>
+                </div>
+                <input type="hidden" id="id_input" name="id_cli">
+
                 <button class="btn" type="submit" name="save">
                     حفظ
                 </button>
             </form>
         </div>
     </div>
+
     <div class="sersh">
         <div class="group">
             <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
@@ -143,8 +206,8 @@ include 'sidbar.php';
 
 
                                 <td><a href="update_client.php?id=<?= $row['id'] ?>"><i class="bi bi-pen"></i></a></td>
-                                <td><a href="delete_client.php?id=<?= $row['id'] ?>"><i class="bi bi-trash"></i></a></td>
-                                <td><a class="det"><i class="bi bi-bag-plus "></i></a></td>
+                                <td><a onclick="deleteC(<?php echo $row['id']; ?>)"><i class="bi bi-trash"></i></a></td>
+                                <td><a class="det" onclick="sendClientId(<?= $row['id'] ?>) ; hadeldetAction(); "><i class="bi bi-bag-plus "></i></a></td>
 
                                 <td><?= $row['avance'] ?></td>
                                 <td><?= $row['address'] ?></td>
@@ -225,28 +288,58 @@ include 'sidbar.php';
 
         bl2.style.opacity = "0";
         bl2.style.visibility = "hidden";
-        if (sessionStorage.getItem("det") === "false") {
-            sessionStorage.setItem("det", false);
-        }
+
 
         det.addEventListener("click", function() {
             bl2.style.opacity = "1";
             bl2.style.visibility = "visible";
-            sessionStorage.setItem("det", true);
         });
 
-        if (sessionStorage.getItem("det") === "true") {
-            bl2.style.opacity = "1";
-            bl2.style.visibility = "visible";
-        }
 
         close2.addEventListener("click", function() {
             bl2.style.opacity = "0";
             bl2.style.visibility = "hidden";
-            sessionStorage.setItem("det", false);
 
 
         });
+    </script>
+
+
+    <script>
+        function deleteC(id_client) {
+            alert('هل تريد حقا حذف؟');
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "delete_client.php?id=" + id_client, true);
+            xhttp.send();
+            setTimeout(() => {
+                location.reload();
+            }, "500");
+        }
+
+
+
+
+        function hadeldetAction() {
+            bl2.style.opacity = "1";
+            bl2.style.visibility = "visible";
+            sessionStorage.setItem("det", true);
+        };
+
+
+
+        function sendClientId(id_client) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var id = document.getElementById('id_input');
+
+                    var responseData = JSON.parse(this.responseText);
+                    id.value = responseData.id;
+                }
+            };
+            xhttp.open("GET", "select_client.php?id_client=" + id_client, true);
+            xhttp.send();
+        };
     </script>
 
 </body>

@@ -21,27 +21,38 @@ if (isset($_GET['id'])) {
 
 //partie modification
 if (isset($_POST['save'])) {
-
-
-
     $name = $_POST['name'];
     $ville = $_POST['ville'];
     $adr = $_POST['adr'];
     $tele = $_POST['tele'];
     $prix = $_POST['prix'];;
 
-    $sql = "UPDATE client SET name = ?, address=?,ville=? ,tele=?  ,avance=? where id=?";
 
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        echo "error";
+    $select = "SELECT * FROM `client` WHERE `name` = ?";
+    if (!mysqli_stmt_prepare($stmt, $select)) {
+        $error = "select is failed";
     } else {
-        mysqli_stmt_bind_param($stmt, "sssssi", $name, $adr, $ville, $tele, $prix, $code);
+        mysqli_stmt_bind_param($stmt, "s", $name);
         mysqli_stmt_execute($stmt);
-        header('location:client_f.php');
+        $result = mysqli_stmt_get_result($stmt);
+        $row_c = mysqli_fetch_assoc($result);
+
+        $sql = "UPDATE client SET name = ?, address=?,ville=? ,tele=?  ,avance=? where id=?";
+
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            echo "error";
+        } else {
+            mysqli_stmt_bind_param($stmt, "sssssi", $name, $adr, $ville, $tele, $prix, $code);
+            mysqli_stmt_execute($stmt);
+
+            if ($row_c['type_c'] == "fidele") {
+                header('location:client_f.php');
+            } else {
+                header('location:client_n.php');
+            }
+        }
     }
 }
-
-
 ?>
 
 
@@ -62,23 +73,14 @@ if (isset($_POST['save'])) {
         <div class="form-cont">
             <form action="" method="post">
 
-                <?php
-                if (isset($error)) {
-                    foreach ($error as $error) {
-
-                        echo '<div class="error" id="acc">
-                 <i class="fa-solid fa-circle-exclamation"></i>
-                <p>' . $error . '</p>
-                 </div>';
-                    };
-                };
-
-                ?>
 
                 <div class="icon-form">
                     <i class="bi bi-person-add"></i>
 
                 </div>
+
+
+
 
                 <div class="txt_field">
                     <input type="text" required id="" value="<?= $row['name'] ?>" name="name" />

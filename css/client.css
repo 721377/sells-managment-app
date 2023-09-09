@@ -4,7 +4,18 @@
   box-sizing: border-box;
   text-decoration: none;
 }
-
+.bl .form-cont .error {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: 2px;
+  left: 0;
+}
+.bl .form-cont .error p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9em;
+  color: red;
+}
 
 .container {
   position: absolute;
@@ -167,8 +178,6 @@ td:hover .bi-printer {
   background-color: #c6c9ca;
 }
 
-<<<<<<< HEAD
-=======
 .table::-webkit-scrollbar-thumb {
   background: #d0def2;
   border-radius: 8px;
@@ -177,7 +186,6 @@ td:hover .bi-printer {
   background: #ffff;
   width: 8px;
 }
->>>>>>> c7bc3cc8e92c1bc1f8e396ec82dc2d9f311bd183
 .combobox select {
   height: 30px;
   width: 200px;

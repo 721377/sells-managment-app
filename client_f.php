@@ -17,7 +17,7 @@ if (isset($_POST['save'])) {
 
     $select = "SELECT * FROM `client` WHERE `name` = ?";
     if (!mysqli_stmt_prepare($stmt, $select)) {
-        $error[] = "select is failed";
+        $error = "select is failed";
     } else {
         mysqli_stmt_bind_param($stmt, "s", $name);
         mysqli_stmt_execute($stmt);
@@ -28,16 +28,16 @@ if (isset($_POST['save'])) {
 
 
         if (mysqli_num_rows($result) > 0) {
-            $error[] = "the client is alredy exist!";
+            $error = "العميل موجود بالفعل!";
         } else {
 
             $insert = "INSERT INTO `client`(`name`, `address`, `ville`, `tele`, `type_c`, `avance`) VALUES (?,?,?,?, 'fidele',?);";
             if (!mysqli_stmt_prepare($stmt, $insert)) {
-                $error[] = "insert is failed";
+                $error = "insert is failed";
             } else {
                 mysqli_stmt_bind_param($stmt, "sssss", $name, $adr, $ville, $tele, $prix);
                 mysqli_stmt_execute($stmt);
-                header('location:client_f.php');
+                echo '<script> alert("تمت إضافة العميل بنجاح");</script>';
             }
         }
     }
@@ -69,6 +69,12 @@ include 'sidbar.php';
                     <i class="bi bi-person-add"></i>
 
                 </div>
+                <?php if (!empty($error)) : ?>
+                    <div class="error">
+                        <i class="bi bi-exclamation-circle"></i><?php echo $error; ?>
+                    </div>
+
+                <?php endif; ?>
 
                 <div class="txt_field">
                     <input type="text" required id="" name="name" />
@@ -199,7 +205,7 @@ include 'sidbar.php';
 
                                 <td><a href="update_client.php?id=<?= $row['id'] ?>"><i class="bi bi-pen"></i></a></td>
                                 <td><a onclick="deleteC(<?php echo $row['id']; ?>)"><i class="bi bi-trash"></i></a></td>
-                                <td><a class="det" onclick="sendClientId(<?= $row['id'] ?>)"><i class="bi bi-bag-plus "></i></a></td>
+                                <td><a class="det" onclick="sendClientId(<?= $row['id'] ?>) ; hadeldetAction(); "><i class="bi bi-bag-plus "></i></a></td>
 
                                 <td><?= $row['avance'] ?></td>
                                 <td><?= $row['address'] ?></td>
@@ -244,6 +250,11 @@ include 'sidbar.php';
             });
         });
     </script>
+
+
+
+
+
 
 
 
@@ -311,25 +322,17 @@ include 'sidbar.php';
 
         bl2.style.opacity = "0";
         bl2.style.visibility = "hidden";
-        if (sessionStorage.getItem("det") === "false") {
-            sessionStorage.setItem("det", false);
-        }
 
-        det.addEventListener("click", function() {
+
+        function hadeldetAction() {
             bl2.style.opacity = "1";
             bl2.style.visibility = "visible";
-            sessionStorage.setItem("det", true);
-        });
+        };
 
-        if (sessionStorage.getItem("det") === "true") {
-            bl2.style.opacity = "1";
-            bl2.style.visibility = "visible";
-        }
 
         close2.addEventListener("click", function() {
             bl2.style.opacity = "0";
             bl2.style.visibility = "hidden";
-            sessionStorage.setItem("det", false);
 
 
         });
@@ -337,7 +340,7 @@ include 'sidbar.php';
 
     <script>
         function deleteC(id_client) {
-            alert('voulez vous vraiment supprimer ?');
+            alert('هل تريد حقا حذف؟');
             var xhttp = new XMLHttpRequest();
             xhttp.open("GET", "delete_client.php?id=" + id_client, true);
             xhttp.send();

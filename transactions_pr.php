@@ -15,11 +15,11 @@ if (isset($_POST['save'])) {
     $tele =  $_POST['tele'];
     $monta = $_POST['m_tot'];
     $avance = $_POST['avance'];
-    
 
 
 
- $select = "SELECT * FROM `fornisseur` WHERE `name` = ?";
+
+    $select = "SELECT * FROM `fornisseur` WHERE `name` = ?";
     if (!mysqli_stmt_prepare($stmt, $select)) {
         $error[] = "select is failed";
     } else {
@@ -27,22 +27,22 @@ if (isset($_POST['save'])) {
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
     }
-        if (mysqli_num_rows($result) > 0) {
-            $error[] = "! المورد الموجود سابقا ";
-        } else {
+    if (mysqli_num_rows($result) > 0) {
+        $error[] = "! المورد الموجود سابقا ";
+    } else {
 
-            $insert = "INSERT INTO `fornisseur`(`name`, `tele`, `total`, `avance`) VALUES (?,?,?,?);";
-            if (!mysqli_stmt_prepare($stmt, $insert)) {
-                $error[] = "insert is failed";
-            } else {
-                mysqli_stmt_bind_param($stmt, "ssss", $nom_f, $tele, $monta, $avance);
-                mysqli_stmt_execute($stmt);
-                header('location:transaction_pr.php');
-            }
+        $insert = "INSERT INTO `fornisseur`(`name`, `tele`, `total`, `avance`) VALUES (?,?,?,?);";
+        if (!mysqli_stmt_prepare($stmt, $insert)) {
+            $error[] = "insert is failed";
+        } else {
+            mysqli_stmt_bind_param($stmt, "ssss", $nom_f, $tele, $monta, $avance);
+            mysqli_stmt_execute($stmt);
+            header('location:transaction_pr.php');
         }
     }
+}
 
-    $select = mysqli_query($conn, "SELECT * FROM `fornisseur`  ORDER BY id DESC");
+$select = mysqli_query($conn, "SELECT * FROM `fornisseur`  ORDER BY id DESC");
 
 
 include 'sidbar.php';
@@ -64,7 +64,7 @@ include 'sidbar.php';
 
 <body>
 
-<div class="bl font1" id="form_add">
+    <div class="bl font1" id="form_add">
         <div class="form-cont">
             <form action="" method="post">
                 <i class="bi bi-x-circle close-icon"></i>
@@ -74,25 +74,25 @@ include 'sidbar.php';
                 </div>
 
                 <div class="txt_field">
-                        <input type="text" required id="" name="name" />
-                        <span></span>
-                        <label for=""> * اسم المورد</label>
-                    </div>
-                    <div class="txt_field">
-                        <input type="text" required id="" name="tele" />
-                        <span></span>
-                        <label for=""> * رقم الهاتف</label>
-                    </div>
-                    <div class="txt_field">
-                        <input type="text" required id="" name="m_tot" />
-                        <span></span>
-                        <label for=""> * مبلغ الاجمالي</label>
-                    </div>
-                    <div class="txt_field">
-                        <input type="text" required id="" name="avance" />
-                        <span></span>
-                        <label for=""> * مبلغ التسبيق</label>
-                    </div>
+                    <input type="text" required id="" name="name" />
+                    <span></span>
+                    <label for=""> * اسم المورد</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" required id="" name="tele" />
+                    <span></span>
+                    <label for=""> * رقم الهاتف</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" required id="" name="m_tot" />
+                    <span></span>
+                    <label for=""> * مبلغ الاجمالي</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" required id="" name="avance" />
+                    <span></span>
+                    <label for=""> * مبلغ التسبيق</label>
+                </div>
 
 
 
@@ -103,25 +103,8 @@ include 'sidbar.php';
         </div>
     </div>
 
-    
-    <div class="bl font1" id="form_det">
-        <div class="form-cont2">
-            <div class="icon-form">
-                <i class="bi bi-person-lines-fill"></i>
 
-            </div>
-            <div class="iformations">
-                <h1 id="nom_cli">
-                </h1>
-                <h3 id="age"></h3>
-                <h3 id="tele"></h3>
-                <h3 id="prix"></h3>
-                <h3 id="date"></h3>
-            </div>
-            <i class="bi bi-x-circle close-icon2"></i>
 
-        </div>
-    </div>
     <div class="sersh">
         <div class="group">
             <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
@@ -158,18 +141,17 @@ include 'sidbar.php';
                     </Thead>
 
                     <tbody>
-                    <?php while ($row = mysqli_fetch_assoc($select)) { ?>
-                        <tr>
-                            <td><a href="delet_f.php?id=<?=$row['id']?>"><i class="bi bi-trash"></i></a></td>
-                            <td><a href="editer_f.php?id=<?=$row['id']?>"><i class="bi bi-pen"></i></a></td>
-                            <td><a onclick="aff_det(<?php echo $row['id']; ?>);  handeldettactio() ;" class="det"> <i class="bi bi-eye "></i></a></td>
-                            <td><?= $row['total'] ." Dhs" ?></td>
-                            <td><?= $row['avance'] ." Dhs" ?></td>
-                            <td><?= $row['total'] - $row['avance'] ." Dhs"?></td>
-                            <td><?= $row['tele'] ." Dhs" ?></td>
-                            <td><?= $row['name'] ." Dhs" ?></td>
+                        <?php while ($row = mysqli_fetch_assoc($select)) { ?>
+                            <tr>
+                                <td><a href="delet_f.php?id=<?= $row['id'] ?>"><i class="bi bi-trash"></i></a></td>
+                                <td><a href="editer_f.php?id=<?= $row['id'] ?>"><i class="bi bi-pen"></i></a></td>
+                                <td><?= $row['total'] . " Dhs" ?></td>
+                                <td><?= $row['avance'] . " Dhs" ?></td>
+                                <td><?= $row['total'] - $row['avance'] . " Dhs" ?></td>
+                                <td><?= $row['tele'] . " Dhs" ?></td>
+                                <td><?= $row['name'] . " Dhs" ?></td>
 
-                        </tr>
+                            </tr>
 
                         <?php } ?>
                     </tbody>
@@ -231,42 +213,6 @@ include 'sidbar.php';
             bl.style.opacity = "0";
             bl.style.visibility = "hidden";
             sessionStorage.setItem("add", false);
-        });
-
-
-
-
-
-
-
-
-        const bl2 = document.querySelector("#form_det");
-        const close2 = document.querySelector(".close-icon2");
-        const det = document.querySelector('.det')
-
-        bl2.style.opacity = "0";
-        bl2.style.visibility = "hidden";
-        if (sessionStorage.getItem("det") === "false") {
-            sessionStorage.setItem("det", false);
-        }
-
-        function handeldettactio() {
-            bl2.style.opacity = "1";
-            bl2.style.visibility = "visible";
-            sessionStorage.setItem("det", true);
-        }
-
-        if (sessionStorage.getItem("det") === "true") {
-            bl2.style.opacity = "1";
-            bl2.style.visibility = "visible";
-        }
-
-        close2.addEventListener("click", function() {
-            bl2.style.opacity = "0";
-            bl2.style.visibility = "hidden";
-            sessionStorage.setItem("det", false);
-
-
         });
     </script>
 
