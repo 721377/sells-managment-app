@@ -111,7 +111,7 @@ include 'sidbar.php';
 
     <div class="bl font1" id="form_det">
         <div class="form-cont2">
-            <form action="" method="post">
+            <form action="add_commade.php" method="post">
                 <i class="bi bi-x-circle close-icon2"></i>
                 <div class="icon-form">
                     <i class="bi bi-node-plus"></i>
@@ -119,17 +119,34 @@ include 'sidbar.php';
 
                 <div class="flex">
                     <div class="txt_field">
-                        <input type="text" required id="" name="name" />
+                        <input type="text" required id="" name="art" />
                         <span></span>
                         <label for=""> * كمية </label>
                     </div>
                     <div class="txt_field">
-                        <input type="text" required id="" name="name" />
+                        <input type="text" required id="" name="qun" />
                         <span></span>
                         <label for=""> * سلعة</label>
                     </div>
 
                 </div>
+
+
+                <div class="container_rad">
+                    <div class="form">
+
+                        <label>
+                            <input type="radio" value="normale" name="type">
+                            <span> طلبية عادية </span>
+                        </label>
+                        <label>
+                            <input type="radio" value="livrer" name="type">
+                            <span> طلبية مسلمة </span>
+                        </label>
+                    </div>
+                </div>
+                <input type="hidden" id="id_input" name="id_cli">
+
                 <button class="btn" type="submit" name="save">
                     حفظ
                 </button>
@@ -182,7 +199,7 @@ include 'sidbar.php';
 
                                 <td><a href="update_client.php?id=<?= $row['id'] ?>"><i class="bi bi-pen"></i></a></td>
                                 <td><a onclick="deleteC(<?php echo $row['id']; ?>)"><i class="bi bi-trash"></i></a></td>
-                                <td><a class="det"><i class="bi bi-bag-plus "></i></a></td>
+                                <td><a class="det" onclick="sendClientId(<?= $row['id'] ?>)"><i class="bi bi-bag-plus "></i></a></td>
 
                                 <td><?= $row['avance'] ?></td>
                                 <td><?= $row['address'] ?></td>
@@ -231,6 +248,32 @@ include 'sidbar.php';
 
 
     <script>
+        function sendClientId(id_client) {
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+
+
+
+                if (this.readyState == 4 && this.status == 200) {
+                    var id = document.getElementById('id_input');
+
+                    var responseData = JSON.parse(this.responseText);
+                    id.value = responseData.id;
+                }
+
+            };
+            xhttp.open("GET", "select_client.php?id_client=" + id_client, true);
+            xhttp.send();
+        }
+
+
+
+
+
+
+
+
         const bl = document.querySelector("#form_add");
         const close = document.querySelector(".close-icon");
         const add = document.querySelector("#add");
