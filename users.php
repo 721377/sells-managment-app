@@ -11,8 +11,8 @@ $stmt = mysqli_stmt_init($conn);
 
 if (isset($_POST['save'])) {
     $nom = $_POST['name'];
-    $email =  $_POST['tele'];
-    $pass = $_POST['m_tot'];
+    $email =  $_POST['email'];
+    $pass = $_POST['pass'];
     $rol = $_POST['rol'];
 
 
@@ -27,25 +27,25 @@ if (isset($_POST['save'])) {
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
     }
-        
-   
 
-        if (mysqli_num_rows($result) > 0) {
-            $error[] = "! المستخدم الموجود سابقا ";
+
+
+    if (mysqli_num_rows($result) > 0) {
+        $error[] = "! المستخدم الموجود سابقا ";
+    } else {
+
+        $insert = "INSERT INTO `users`(`nom`, `email`, `pass`, `role`) VALUES (?,?,?,?);";
+        if (!mysqli_stmt_prepare($stmt, $insert)) {
+            $error[] = "insert is failed";
         } else {
-
-            $insert = "INSERT INTO `users`(`nom`, `email`, `pass`, `role`) VALUES (?,?,?,?);";
-            if (!mysqli_stmt_prepare($stmt, $insert)) {
-                $error[] = "insert is failed";
-            } else {
-                mysqli_stmt_bind_param($stmt, "sss", $nom_f, $tele, $monta, $rol);
-                mysqli_stmt_execute($stmt);
-                header('location:transaction_pr.php');
-            }
+            mysqli_stmt_bind_param($stmt, "ssss", $nom, $email, $pass, $rol);
+            mysqli_stmt_execute($stmt);
+            header('location:users.php');
         }
     }
+}
 
-    $select = mysqli_query($conn, "SELECT * FROM `users`  ORDER BY id DESC");
+$select = mysqli_query($conn, "SELECT * FROM `users`  ORDER BY id DESC");
 
 
 include 'sidbar.php';
@@ -64,7 +64,7 @@ include 'sidbar.php';
 </head>
 
 <body>
-<div class="bl font1" id="form_add">
+    <div class="bl font1" id="form_add">
         <div class="form-cont">
             <form action="" method="post">
                 <i class="bi bi-x-circle close-icon"></i>
@@ -79,23 +79,23 @@ include 'sidbar.php';
                     <label for=""> *الاسم المستخدم</label>
                 </div>
                 <div class="txt_field">
-                    <input type="text" required id="" name="email" />
+                    <input type="email" required id="" name="email" />
                     <span></span>
                     <label for=""> *بريد الكتروني</label>
                 </div>
 
                 <div class="txt_field">
-                    <input type="text" required id="" name="pass" />
+                    <input type="password" required id="" name="pass" />
                     <span></span>
                     <label for="">*كلمة السر</label>
                 </div>
-                <div class="txt_field">
+                <div class="select">
                     <select name="rol" id="">
-                    <option value="" disabled selected>دور</option>
+                        <option value="" disabled selected>دور</option>
                         <option value="admin">admin</option>
                         <option value="user">user</option>
                     </select>
-                    
+
                 </div>
 
 
@@ -123,8 +123,8 @@ include 'sidbar.php';
 
         <div class="top">
             <div class="titel">المستخدمين </div>
-            
-            <div class="add">
+
+            <div class="add" id="add">
                 <i class="bi bi-plus-circle"></i>
                 اضافة المستخدم
             </div>
@@ -144,19 +144,19 @@ include 'sidbar.php';
                     </Thead>
 
                     <tbody>
-                    <?php while ($row = mysqli_fetch_assoc($select)) { ?>
-                         <tr>
-                            
-                         <td><a href="delete-use.php<?= $row['id'] ?>"><i class="bi bi-trash"></i></a></td>
-                            <td><?= $row['role'] ?></td>
-                            <td><?= $row['email']  ?></td>
-                            <td><?= $row['pass']?></td>
-                            <td><?=  $row['nom']?></td>
-                            
+                        <?php while ($row = mysqli_fetch_assoc($select)) { ?>
+                            <tr>
 
-                        </tr>
-                        
-                        <?php }?>
+                                <td><a href="delete-use.php?id=<?= $row['id'] ?>"><i class="bi bi-trash"></i></a></td>
+                                <td><?= $row['role'] ?></td>
+                                <td><?= $row['email']  ?></td>
+                                <td><?= $row['pass'] ?></td>
+                                <td><?= $row['nom'] ?></td>
+
+
+                            </tr>
+
+                        <?php } ?>
                     </tbody>
                 </table>
 
@@ -171,7 +171,6 @@ include 'sidbar.php';
 
     <!-- form the sersh -->
     <script>
-         
         const bl = document.querySelector("#form_add");
         const close = document.querySelector(".close-icon");
         const add = document.querySelector("#add");

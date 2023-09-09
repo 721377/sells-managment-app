@@ -14,6 +14,10 @@ if (!isset($_SESSION['user_name'])) {
 if (isset($_GET['id'])) {
     $name_client_form_commandes_add = decryptId($_GET['id']);
 }
+
+
+$select = mysqli_query($conn, "SELECT * FROM `commande_online` ORDER BY id DESC");
+
 include 'sidbar.php';
 ?>
 <!DOCTYPE html>
@@ -33,14 +37,7 @@ include 'sidbar.php';
 
 
 
-    <div class="bl font1" id="form_add">
-        <div class="form-cont">
-            <form action="" method="post">
-                <i class="bi bi-x-circle close-icon"></i>
 
-            </form>
-        </div>
-    </div>
 
     <div class="sersh">
         <div class="group">
@@ -75,10 +72,7 @@ include 'sidbar.php';
                     </select>
                 </div>
             </div>
-            <div class="add">
-                <i class="bi bi-plus-circle"></i>
-                اضافة زبون
-            </div>
+
         </div>
         <div class="body">
 
@@ -90,7 +84,7 @@ include 'sidbar.php';
                         <th>مدينة</th>
                         <th>مبلغ سلف</th>
                         <th> رقم الهاتف</th>
-                        <th> الاسم الكامل</th>
+                        <th> صاحب الطلبية</th>
 
 
                     </Thead>
@@ -202,107 +196,103 @@ include 'sidbar.php';
                     </button>
                 </div>
 
+            </form>
+        </div>
 
 
-                <div class="bl font1" id="form_add">
-                    <div class="form-cont">
-                        <form action="" method="post">
-                            <i class="bi bi-x-circle close-icon"></i>
 
 
-                        </form>
-                    </div>
-                </div>
+    </div>
 
 
-                <!-- and-form-add -->
+    <!-- and-form-add -->
 
-                <script>
-                    const bl = document.querySelector("#form_add");
-                    const close = document.querySelector(".close-icon");
-                    bl.style.opacity = "0";
-                    bl.style.visibility = "hidden";
+    <script>
+        const bl = document.querySelector("#form_add");
+        const close = document.querySelector(".close-icon");
+        bl.style.opacity = "0";
+        bl.style.visibility = "hidden";
 
-                    function open_form() {
-                        if (bl.style.opacity == "0" && bl.style.visibility == "hidden") {
-                            bl.style.opacity = "1";
-                            bl.style.visibility = "visible";
-                        }
+        function open_form() {
+            if (bl.style.opacity == "0" && bl.style.visibility == "hidden") {
+                bl.style.opacity = "1";
+                bl.style.visibility = "visible";
+            }
+        }
+        close.onclick = function() {
+            bl.style.opacity = "0";
+            bl.style.visibility = "hidden";
+        }
+    </script>
+    <script>
+        const bl2 = document.querySelector("#form_minis");
+        const close2 = document.querySelector(".close-icon2");
+        bl2.style.opacity = "0";
+        bl2.style.visibility = "hidden";
+
+        function open_min() {
+            if (bl2.style.opacity == "0" && bl2.style.visibility == "hidden") {
+                bl2.style.opacity = "1";
+                bl2.style.visibility = "visible";
+                console.log("true");
+            }
+        }
+        close2.onclick = function() {
+            bl2.style.opacity = "0";
+            bl2.style.visibility = "hidden";
+        }
+    </script>
+
+
+
+    <!-- form the sersh -->
+    <script>
+        $(document).ready(function() {
+            $("#searchInput").on("keyup", function() {
+                var searchText = $(this).val().toLowerCase(); // Get the text from the input and convert it to lowercase
+
+                $("tbody tr ").each(function() {
+                    // Loop through each row in the tbody
+                    var rowText = $(this).text().toLowerCase(); // Get the text of the current row and convert it to lowercase
+
+                    if (rowText.indexOf(searchText) === -1) {
+                        // If the row text does not contain the search text, hide the row
+                        $(this).hide();
+                    } else {
+                        // Otherwise, show the row
+                        $(this).show();
                     }
-                    close.onclick = function() {
-                        bl.style.opacity = "0";
-                        bl.style.visibility = "hidden";
+                });
+            });
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+
+            var searchText = document.getElementById("searchInput").value;
+
+            if (searchText.trim() !== "") {
+
+                $("tbody tr ").each(function() {
+                    // Loop through each row in the tbody
+                    var rowText = $(this).text().toLowerCase(); // Get the text of the current row and convert it to lowercase
+
+                    if (rowText.indexOf(searchText) === -1) {
+                        // If the row text does not contain the search text, hide the row
+                        $(this).hide();
+                    } else {
+                        // Otherwise, show the row
+                        $(this).show();
                     }
-                </script>
-                <script>
-                    const bl2 = document.querySelector("#form_minis");
-                    const close2 = document.querySelector(".close-icon2");
-                    bl2.style.opacity = "0";
-                    bl2.style.visibility = "hidden";
+                });
+            } else {
 
-                    function open_min() {
-                        if (bl2.style.opacity == "0" && bl2.style.visibility == "hidden") {
-                            bl2.style.opacity = "1";
-                            bl2.style.visibility = "visible";
-                            console.log("true");
-                        }
-                    }
-                    close2.onclick = function() {
-                        bl2.style.opacity = "0";
-                        bl2.style.visibility = "hidden";
-                    }
-                </script>
-
-
-
-                <!-- form the sersh -->
-                <script>
-                    $(document).ready(function() {
-                        $("#searchInput").on("keyup", function() {
-                            var searchText = $(this).val().toLowerCase(); // Get the text from the input and convert it to lowercase
-
-                            $("tbody tr ").each(function() {
-                                // Loop through each row in the tbody
-                                var rowText = $(this).text().toLowerCase(); // Get the text of the current row and convert it to lowercase
-
-                                if (rowText.indexOf(searchText) === -1) {
-                                    // If the row text does not contain the search text, hide the row
-                                    $(this).hide();
-                                } else {
-                                    // Otherwise, show the row
-                                    $(this).show();
-                                }
-                            });
-                        });
-                    });
-                </script>
-
-
-                <script>
-                    $(document).ready(function() {
-
-                        var searchText = document.getElementById("searchInput").value;
-
-                        if (searchText.trim() !== "") {
-
-                            $("tbody tr ").each(function() {
-                                // Loop through each row in the tbody
-                                var rowText = $(this).text().toLowerCase(); // Get the text of the current row and convert it to lowercase
-
-                                if (rowText.indexOf(searchText) === -1) {
-                                    // If the row text does not contain the search text, hide the row
-                                    $(this).hide();
-                                } else {
-                                    // Otherwise, show the row
-                                    $(this).show();
-                                }
-                            });
-                        } else {
-
-                            $("tbody tr ").show();
-                        }
-                    });
-                </script>
+                $("tbody tr ").show();
+            }
+        });
+    </script>
 </body>
 
 </html>
