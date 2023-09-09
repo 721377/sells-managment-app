@@ -71,7 +71,7 @@
                             <span></span>
                             <i class="bi bi-person-heart"></i>
 
-                            <h4 class="font1">زبائن أوفياء</h4>
+                            <h4 class="font1">الزبائن أوفياء</h4>
                         </div>
                     </a>
 
@@ -80,7 +80,7 @@
                             <span></span>
                             <i class="bi bi-person"></i>
 
-                            <h4 class="font1">زبائن الجدد</h4>
+                            <h4 class="font1">الزبائن الجدد</h4>
                         </div>
                     </a>
 
