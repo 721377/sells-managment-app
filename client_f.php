@@ -151,11 +151,11 @@ include 'sidbar.php';
                         </label>
                     </div>
                 </div>
-                <input type="hidden" id="id_input" name="id_cli">
+                <input type="hidden" id="input" name="id_cli">
 
-                <button class="btn" type="submit" name="save">
-                    حفظ
-                </button>
+                <input  class="btn" type="submit" name="save" value="  حفظ">
+                  
+               
             </form>
         </div>
     </div>
@@ -205,7 +205,7 @@ include 'sidbar.php';
 
                                 <td><a href="update_client.php?id=<?= $row['id'] ?>"><i class="bi bi-pen"></i></a></td>
                                 <td><a onclick="deleteC(<?php echo $row['id']; ?>)"><i class="bi bi-trash"></i></a></td>
-                                <td><a class="det" onclick="sendClientId(<?= $row['id'] ?>) ; hadeldetAction(); "><i class="bi bi-bag-plus "></i></a></td>
+                                <td><a class="det" onclick=" hadeldetAction(<?= $row['id'] ?>)"><i class="bi bi-bag-plus "></i></a></td>
 
                                 <td><?= $row['avance'] ?></td>
                                 <td><?= $row['address'] ?></td>
@@ -227,7 +227,7 @@ include 'sidbar.php';
 
 
     </div>
-
+   
 
     <!-- form the sersh -->
     <script>
@@ -259,28 +259,7 @@ include 'sidbar.php';
 
 
     <script>
-        function sendClientId(id_client) {
-
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-
-
-
-                if (this.readyState == 4 && this.status == 200) {
-                    var id = document.getElementById('id_input');
-
-                    var responseData = JSON.parse(this.responseText);
-                    id.value = responseData.id;
-                }
-
-            };
-            xhttp.open("GET", "select_client.php?id_client=" + id_client, true);
-            xhttp.send();
-        }
-
-
-
-
+       
 
 
 
@@ -324,9 +303,12 @@ include 'sidbar.php';
         bl2.style.visibility = "hidden";
 
 
-        function hadeldetAction() {
+        function hadeldetAction(id) {
             bl2.style.opacity = "1";
             bl2.style.visibility = "visible";
+            var input = document.getElementById('input');
+            input.value = id;
+          
         };
 
 
