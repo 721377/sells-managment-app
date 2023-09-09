@@ -37,7 +37,7 @@ if (isset($_POST['save'])) {
             } else {
                 mysqli_stmt_bind_param($stmt, "ssss", $nom_f, $tele, $monta, $avance);
                 mysqli_stmt_execute($stmt);
-                header('location:transaction_pr.php');
+                header('location:transactions_pr.php');
             }
         }
     }
@@ -149,7 +149,7 @@ include 'sidbar.php';
             <div class="table">
                 <table>
                     <Thead>
-                        <th colspan="3">العمليات</th>
+                        <th colspan="2">العمليات</th>
                         <th>مبلغ الاجمالي</th>
                         <th>مبلغ مسبق</th>
                         <th>مبلغ سلف</th>
@@ -162,12 +162,11 @@ include 'sidbar.php';
                         <tr>
                             <td><a href="delet_f.php?id=<?=$row['id']?>"><i class="bi bi-trash"></i></a></td>
                             <td><a href="editer_f.php?id=<?=$row['id']?>"><i class="bi bi-pen"></i></a></td>
-                            <td><a onclick="aff_det(<?php echo $row['id']; ?>);  handeldettactio() ;" class="det"> <i class="bi bi-eye "></i></a></td>
                             <td><?= $row['total'] ." Dhs" ?></td>
                             <td><?= $row['avance'] ." Dhs" ?></td>
                             <td><?= $row['total'] - $row['avance'] ." Dhs"?></td>
-                            <td><?= $row['tele'] ." Dhs" ?></td>
-                            <td><?= $row['name'] ." Dhs" ?></td>
+                            <td><?= $row['tele']  ?></td>
+                            <td><?= $row['name']  ?></td>
 
                         </tr>
 

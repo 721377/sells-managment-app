@@ -29,7 +29,7 @@ include 'sidbar.php';
 
             <a href="client_f.php" class="box cardcolor">
                 <i class="bi bi-person-heart"></i>
-                <h2>زبائن أوفياء</h2>
+                <h2>الزبناء أوفياء</h2>
                 <h1><?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM client WHERE `type_c` ='fidele'")) ?></h1>
             </a>
 
@@ -37,7 +37,7 @@ include 'sidbar.php';
 
             <a href="client_n.php" class="box cardcolor">
                 <i class="bi bi-person"></i>
-                <h2>زبائن الجدد</h2>
+                <h2>الزبناء الجدد</h2>
                 <h1><?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM client WHERE `type_c` ='nouveau'")) ?></h1>
             </a>
 

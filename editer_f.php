@@ -7,7 +7,7 @@ if (isset($_GET['id'])) {
 
     $code = $_GET['id'];
 
-    $sql = "SELECT * FROM client WHERE id=?";
+    $sql = "SELECT * FROM `fornisseur` WHERE id=?";
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         echo "error";
     } else {
@@ -22,28 +22,29 @@ if (isset($_GET['id'])) {
 //partie modification
 if (isset($_POST['save'])) {
 
+ 
+        $name = $_POST['name'];
+        $tele = $_POST['tele'];
+        $total= $_POST['total'];
+        $avance = $_POST['avance'];
+  
 
+        $sql = "UPDATE `fornisseur` SET name = ?, tele =?, total=?  ,avance=? where id=?";
 
-    $name = $_POST['name'];
-    $ville = $_POST['ville'];
-    $adr = $_POST['adr'];
-    $tele = $_POST['tele'];
-    $prix = $_POST['prix'];;
-
-    $sql = "UPDATE client SET name = ?, address=?,ville=? ,tele=?  ,avance=? where id=?";
-
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        echo "error";
-    } else {
-        mysqli_stmt_bind_param($stmt, "sssssi", $name, $adr, $ville, $tele, $prix, $code);
-        mysqli_stmt_execute($stmt);
-        header('location:client_f.php');
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            echo "error";
+        } else {
+            mysqli_stmt_bind_param($stmt, "sssss", $name, $tele, $total, $avance , $code);
+            mysqli_stmt_execute($stmt);
+            header('location:transactions_pr.php');
+        
     }
 }
 
 
-?>
 
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -61,8 +62,8 @@ if (isset($_POST['save'])) {
     <div class="bl font1" id="form_add">
         <div class="form-cont">
             <form action="" method="post">
-
-          
+         
+            
 
                 <div class="icon-form">
                     <i class="bi bi-person-add"></i>
@@ -70,35 +71,30 @@ if (isset($_POST['save'])) {
                 </div>
 
                 <div class="txt_field">
-                    <input type="text" required id="" value="<?= $row['name'] ?>" name="name" />
+                    <input type="text" required id="" name="name" value="<?= $row['name'] ?>" />
                     <span></span>
                     <label for=""> *الاسم الكامل</label>
                 </div>
                 <div class="txt_field">
-                    <input type="text" required id="" value="<?= $row['tele'] ?>" name="tele" />
+                    <input type="text" required id="" name="tele" value="<?= $row['tele'] ?>" />
                     <span></span>
                     <label for=""> *رقم الهاتف </label>
                 </div>
 
                 <div class="txt_field">
-                    <input type="text" required id="" value="<?= $row['ville'] ?>" name="ville" />
+                    <input type="text" required id="" name="total" value="<?= $row['total'] ?>" />
                     <span></span>
-                    <label for="">*مدينة </label>
+                    <label for="">*مبلغل اجمالي </label>
                 </div>
-
 
 
 
                 <div class="txt_field">
-                    <input type="text" name="adr" value="<?= $row['address'] ?>" required id="" />
+                    <input type="text" name="avance" required id="" value="<?= $row['avance'] ?>"/>
                     <span></span>
-                    <label for="">*عنوان </label>
+                    <label for="">*تسبيق</label>
                 </div>
-                <div class="txt_field">
-                    <input type="text" name="prix" value="<?= $row['avance'] ?>" required id="" />
-                    <span></span>
-                    <label for="">المبلغ المقدم </label>
-                </div>
+                
 
 
                 <button class="btn" type="submit" name="save">
