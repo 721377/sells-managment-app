@@ -230,8 +230,8 @@ include 'sidbar.php';
 
 
     <div class="bl font1" id="form_etape">
-        <div class="form-cont2">
-            <form action="add_com.php" method="post">
+        <div class="form-cont3">
+            <form action="" method="post">
                 <i class="bi bi-x-circle close-icon3"></i>
                 <div class="icon-form">
                     <i class="bi bi-archive"></i>
@@ -242,16 +242,25 @@ include 'sidbar.php';
                     <label for="01">في طور التحضير</label>
                     <input value="2" onclick="updateEtape('etape2')" name="r" type="checkbox" id="02">
                     <label for="02">تم الدفع</label>
-                    <input value="3" name="r" type="checkbox" id="03">
+                    <input value="3" onclick="text_but()" name="r" type="checkbox" id="03">
                     <label for="03">في طور لإرسال</label>
-                    <input value="3" name="r" type="checkbox" id="03">
+                    <input value="3" onclick="updateEtape('etape4')" name="r" type="checkbox" id="03">
                     <label for="03">تم لإرسال</label>
                 </div>
+                 <div class="text_button" id="text_button">
 
-                <input type="hidden" name="" id="inputCm">
-                <button class="btn" type="submit" name="save">
-                    إضافة الطلب
+                <div class="txt_field">
+                        <input type="text" required id="inputliv" name="" />
+                        <span></span>
+                        <label for="">شركة الارسال</label>
+                    </div>
+
+                    <button class="btn" onclick="updateEtape_liv('etape3')" type="submit" name="save">
+                    حفظ المرحلة
                 </button>
+                    </div>
+                <input type="hidden" name="" id="inputCm">
+                
 
             </form>
         </div>
@@ -284,6 +293,15 @@ include 'sidbar.php';
             bl3.style.opacity = "0";
             bl3.style.visibility = "hidden";
         }
+
+    </script>
+
+    <script>
+         function text_but() {
+    var textButton = document.getElementById("text_button");
+        textButton.style.visibility = "visible";
+    
+}
     </script>
 
     <script>
@@ -443,7 +461,16 @@ include 'sidbar.php';
             var xhttp = new XMLHttpRequest();
             var inputCm = document.getElementById('inputCm').value;
             console.log(etape);
-            xhttp.open("GET", "valider_etape_commande.php?id=" + inputCm + "&etape=" + etape, true);
+            xhttp.open("GET", "valider_etape_commande.php?id="+ inputCm + "&etape="+ etape, true);
+            xhttp.send();
+
+        }
+        function updateEtape_liv(etape) {
+            var xhttp = new XMLHttpRequest();
+            var inputCm = document.getElementById('inputCm').value;
+            var liv = document.getElementById('inputliv').value;
+            console.log(liv);
+            xhttp.open("GET", "valider_etape_commande.php?id="+ inputCm + "&etape="+ etape + "&nlive="+ liv, true);
             xhttp.send();
 
         }

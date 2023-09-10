@@ -1086,3 +1086,30 @@ td:hover .bi-dash-circle {
       -14px -8px 0 0px #4f29f0;
   }
 }
+#form_etape .form-cont3{
+z-index: 111111111111;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+width: 570px;
+height: 450px;
+background: #fff;
+border-radius: 16px;
+box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
+border: 1px solid rgba(236, 238, 242, 0.37);
+overflow: hidden;
+padding: 0 30px;
+
+}
+.text_button{
+  position: absolute;
+  margin: auto;
+  inset: 0;
+  margin-top: 270px;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  visibility:hidden;
+  transition: 0.3s ease;
+}
