@@ -6,6 +6,7 @@ include 'config.php';
 if (!isset($_SESSION['user_name'])) {
     header('location:login_form.php');
 }
+$date = date('Y M D'); 
 $select_dis = mysqli_query($conn, "SELECT DISTINCT id_client FROM `article`;");
 
 while ($row_dis = mysqli_fetch_assoc($select_dis)) {
@@ -28,7 +29,7 @@ while ($row_dis = mysqli_fetch_assoc($select_dis)) {
         if ($total > $avance) {
             $montant = $total - $avance;
             echo ($montant);
-            mysqli_query($conn, "INSERT INTO `credit`(`name`, `montant`, `tele`) VALUES('$name' , '$montant' , '$tele')");
+            mysqli_query($conn, "INSERT INTO `credit`(`name`, `montant`, `tele`, `dat`) VALUES('$name' , '$montant' , '$tele', '$date')");
         }
     }
 }
@@ -116,6 +117,7 @@ include 'sidbar.php';
                 <table>
                     <Thead>
                         <th>العمليات</th>
+                        <th>تاريخ</th>
                         <th>مبلغ سلف</th>
                         <th> رقم الهاتف</th>
                         <th> اسم الزبون</th>
@@ -128,6 +130,7 @@ include 'sidbar.php';
                         ?>
                             <tr>
                                 <td><a onclick="deleteC(<?php echo $row['id']; ?>)"><i class="bi bi-trash"></i></a></td>
+                                <td><?= $row['dat'] ?> </td>
                                 <td><?= $row['montant'] ?> </td>
                                 <td> <?= $row['tele'] ?> </td>
                                 <td><?= $row['name'] ?> </td>

@@ -5,6 +5,7 @@ include 'cryptfunction.php';
 $stmt = mysqli_stmt_init($conn);
 
 $item = $_POST['item'];
+$type = $_POST['type'];
 $id_cli = $_POST['id_cli'];
 $articl = $_POST['art'];
 $qun =  $_POST['qun'];
