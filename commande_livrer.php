@@ -105,7 +105,7 @@ include 'sidbar.php';
                                     <div onclick="open_min() ; sendClientId(<?= $row['id_c'] ?>)" class="at"><i class="bi bi-dash-circle"></i></div>
                                 </td>
                                 <td><a href="delete_commande_online.php?id=<?= $row['id_c'] ?>"><i class="bi bi-trash"></i></a></td>
-                                <td><a href=""><i class="bi bi-check2"></i></a></td>
+                                <td><a onclick="open_etape(<?= $row['id_comm'] ?>)"><i class="bi bi-archive"></i></i></a></td>
                                 <td><a href=""><i class="bi bi-printer"></i></a></td>
 
                                 <td><?php
@@ -222,6 +222,70 @@ include 'sidbar.php';
 
     <!-- and-form-add -->
 
+
+
+
+    <!-- form-etape -->
+
+
+
+    <div class="bl font1" id="form_etape">
+        <div class="form-cont2">
+            <form action="add_com.php" method="post">
+                <i class="bi bi-x-circle close-icon3"></i>
+                <div class="icon-form">
+                    <i class="bi bi-archive"></i>
+                </div>
+
+                <div id="checklist">
+                    <input checked="" onclick="updateEtape('etape1')" value="1" name="r" type="checkbox" id="01">
+                    <label for="01">في طور التحضير</label>
+                    <input value="2" onclick="updateEtape('etape2')" name="r" type="checkbox" id="02">
+                    <label for="02">تم الدفع</label>
+                    <input value="3" name="r" type="checkbox" id="03">
+                    <label for="03">في طور لإرسال</label>
+                    <input value="3" name="r" type="checkbox" id="03">
+                    <label for="03">تم لإرسال</label>
+                </div>
+
+                <input type="hidden" name="" id="inputCm">
+                <button class="btn" type="submit" name="save">
+                    إضافة الطلب
+                </button>
+
+            </form>
+        </div>
+
+
+
+
+    </div>
+
+
+    <!-- and-form-etape -->
+
+    <script>
+        const bl3 = document.querySelector("#form_etape");
+        const close3 = document.querySelector(".close-icon3");
+        bl3.style.opacity = "0";
+        bl3.style.visibility = "hidden";
+
+        function open_etape(id) {
+            if (bl3.style.opacity == "0" && bl3.style.visibility == "hidden") {
+                bl3.style.opacity = "1";
+                bl3.style.visibility = "visible";
+                var input = document.getElementById('inputCm');
+                input.value = id;
+            }
+        }
+
+
+        close3.onclick = function() {
+            bl3.style.opacity = "0";
+            bl3.style.visibility = "hidden";
+        }
+    </script>
+
     <script>
         const bl = document.querySelector("#form_add");
         const close = document.querySelector(".close-icon");
@@ -294,7 +358,7 @@ include 'sidbar.php';
 
                 $("tbody tr").each(function() {
                     // Loop through each row in the tbody
-                    var rowSport = $(this).find("td:eq(6)").text(); // Get the text of the "sport" td in the current row
+                    var rowSport = $(this).find("td:eq(7)").text(); // Get the text of the "sport" td in the current row
 
                     if (selectedSport === "" || rowSport === selectedSport) {
                         // If no sport is selected or the row's sport matches the selected sport, show the row
@@ -374,6 +438,22 @@ include 'sidbar.php';
 
 
 
+    <script>
+        function updateEtape(etape) {
+            var xhttp = new XMLHttpRequest();
+            var inputCm = document.getElementById('inputCm').value;
+            console.log(etape);
+            xhttp.open("GET", "valider_etape_commande.php?id=" + inputCm + "&etape=" + etape, true);
+            xhttp.send();
+
+        }
+
+        function reaload() {
+            setTimeout(() => {
+                location.reload();
+            }, "500");
+        }
+    </script>
 
 
 </body>

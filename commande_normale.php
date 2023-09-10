@@ -99,7 +99,7 @@ include 'sidbar.php';
                                     <div onclick="open_min() ; sendClientId(<?= $row['id_c'] ?>)" class="at"><i class="bi bi-dash-circle"></i></div>
                                 </td>
                                 <td><a href="delete_commande_locale.php?id=<?= $row['id_c'] ?>"><i class="bi bi-trash"></i></a></td>
-                                <td><a href=""><i class="bi bi-check2"></i></a></td>
+                                <td><a onclick="validerCommande(<?= $row['id_c'] ?>,<?= $row['id_comm'] ?>, 'normale')"><i class="bi bi-check2"></i></a></td>
                                 <td><a href=""><i class="bi bi-printer"></i></a></td>
 
                                 <td><?php
@@ -109,6 +109,7 @@ include 'sidbar.php';
                                     while ($prices = mysqli_fetch_assoc($selet_articels)) {
                                         $totale = $totale + $prices['prix'] * $prices['quantite'];
                                     }
+                                    $_SESSION['totale_nor'] = $totale;
                                     echo  $totale;
                                     ?></td>
                                 <td><?php echo $totale - $row['avance']  ?></td>
@@ -279,7 +280,7 @@ include 'sidbar.php';
 
                 $("tbody tr").each(function() {
                     // Loop through each row in the tbody
-                    var rowSport = $(this).find("td:eq(6)").text(); // Get the text of the "sport" td in the current row
+                    var rowSport = $(this).find("td:eq(7)").text(); // Get the text of the "sport" td in the current row
 
                     if (selectedSport === "" || rowSport === selectedSport) {
                         // If no sport is selected or the row's sport matches the selected sport, show the row
@@ -355,6 +356,18 @@ include 'sidbar.php';
         }
     </script>
 
+
+    <script>
+        function validerCommande(id_client, id_comm, type) {
+            alert('هل تريد حقا تأكيد الطلبية و حفظها؟');
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "validerCommande.php?id_c=" + id_client + "&id_comm=" + id_comm + "&type=" + type, true);
+            xhttp.send();
+            setTimeout(() => {
+                location.reload();
+            }, 500); // Removed quotes around 500
+        }
+    </script>
 
 </body>
 
