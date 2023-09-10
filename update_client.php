@@ -73,10 +73,6 @@ if (isset($_POST['save'])) {
         <div class="form-cont">
             <form action="" method="post">
 
-<<<<<<< HEAD
-=======
-          
->>>>>>> 2c19ebdf6967f8205741907bf7744da755699b48
 
                 <div class="icon-form">
                     <i class="bi bi-person-add"></i>

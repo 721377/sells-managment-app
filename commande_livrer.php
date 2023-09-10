@@ -16,7 +16,7 @@ if (isset($_GET['id'])) {
 }
 
 
-$select = mysqli_query($conn, "SELECT * FROM `commande_online` ORDER BY id DESC");
+$select = mysqli_query($conn, "SELECT c.id as id_c, c.name, c.tele, c.avance, c.ville, c.address FROM commande_online cm, client c WHERE c.id = cm.id_client ");
 
 include 'sidbar.php';
 ?>
@@ -91,39 +91,34 @@ include 'sidbar.php';
 
                     <tbody>
 
-                        <tr>
+                        <?php while ($row = mysqli_fetch_assoc($select)) { ?>
+
+                            <tr>
 
 
-                            <td>
-                                <div onclick="open_form()" class="a"><i class="bi bi-plus-circle"></i></div>
-                            </td>
-                            <td>
-                                <div onclick="open_min()" class="at"><i class="bi bi-dash-circle"></i></div>
-                            </td>
-                            <td><a href=""><i class="bi bi-pen"></i></a></td>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td><a href=""><i class="bi bi-check2"></i></a></td>
-                            <td><a href=""><i class="bi bi-printer"></i></a></td>
+                                <td>
+                                    <div onclick="open_form()" class="a"><i class="bi bi-plus-circle"></i></div>
+                                </td>
+                                <td>
+                                    <div onclick="open_min() ; sendClientId(<?= $row['id_c'] ?>)" class="at"><i class="bi bi-dash-circle"></i></div>
+                                </td>
+                                <td><a href=""><i class="bi bi-pen"></i></a></td>
+                                <td><a href=""><i class="bi bi-trash"></i></a></td>
+                                <td><a href=""><i class="bi bi-check2"></i></a></td>
+                                <td><a href=""><i class="bi bi-printer"></i></a></td>
 
-                            <td>BK123425</td>
-                            <td>BK123425</td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
+                                <td><?= $row['address'] ?></td>
+                                <td><?= $row['ville'] ?></td>
+                                <td><?= $row['avance'] ?></td>
+                                <td><?= $row['tele'] ?> </td>
+                                <td> <?= $row['name'] ?></td>
 
-                        </tr>
+                            </tr>
 
-
-
-
-
-
+                        <?php } ?>
                     </tbody>
                 </table>
-
             </div>
-
-
         </div>
 
 
@@ -148,13 +143,16 @@ include 'sidbar.php';
                         <th>qty</th>
                         <th>action</th>
                     </thead>
-                    <tbody>
+                    <tbody id="t_article">
+
                         <tr>
-                            <td>300dh</td>
-                            <td>2</td>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
 
                         </tr>
+
+
 
                     </tbody>
                 </table>
@@ -230,6 +228,7 @@ include 'sidbar.php';
         bl2.style.opacity = "0";
         bl2.style.visibility = "hidden";
 
+
         function open_min() {
             if (bl2.style.opacity == "0" && bl2.style.visibility == "hidden") {
                 bl2.style.opacity = "1";
@@ -237,6 +236,7 @@ include 'sidbar.php';
                 console.log("true");
             }
         }
+
         close2.onclick = function() {
             bl2.style.opacity = "0";
             bl2.style.visibility = "hidden";
@@ -292,7 +292,41 @@ include 'sidbar.php';
                 $("tbody tr ").show();
             }
         });
+
+
+
+
+
+
+        function sendClientId(id_client) {
+            console.log(id_client);
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    const responseData = JSON.parse(this.responseText); // Parse the response
+                    const table = document.querySelector('table #t_article');
+                    table.innerHTML = "";
+                    responseData.forEach(item => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                    <td>${item.prix}</td>
+                    <td>${item.quantite}</td>
+                    <td><a href="delete_item.php?id=${item.id}"><i class="bi bi-trash"></i></a></td>
+                `;
+                        table.appendChild(row);
+                    });
+                }
+            };
+            xhttp.open("GET", "select_article.php?id_client=" + id_client, true);
+            xhttp.send();
+        }
     </script>
+
+
+
+
+
+
 </body>
 
 </html>
