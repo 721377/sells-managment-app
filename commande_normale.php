@@ -13,6 +13,8 @@ if (isset($_GET['id'])) {
     $name_client_form_commandes_add = decryptId($_GET['id']);
 }
 
+
+
 include 'sidbar.php';
 ?>
 <!DOCTYPE html>

@@ -154,7 +154,7 @@ include 'sidbar.php';
                         </label>
                     </div>
                 </div>
-                <input type="hidden" id="id_input" name="id_cli">
+                <input type="hidden" id="input" name="id_cli">
 
                 <button class="btn" type="submit" name="save">
                     حفظ
@@ -207,7 +207,7 @@ include 'sidbar.php';
 
                                 <td><a href="update_client.php?id=<?= $row['id'] ?>"><i class="bi bi-pen"></i></a></td>
                                 <td><a onclick="deleteC(<?php echo $row['id']; ?>)"><i class="bi bi-trash"></i></a></td>
-                                <td><a class="det" onclick="sendClientId(<?= $row['id'] ?>) ; hadeldetAction(); "><i class="bi bi-bag-plus "></i></a></td>
+                                <td><a class="det" onclick="hadeldetAction(<?= $row['id'] ?>)"><i class="bi bi-bag-plus "></i></a></td>
 
                                 <td><?= $row['avance'] ?></td>
                                 <td><?= $row['address'] ?></td>
@@ -252,10 +252,9 @@ include 'sidbar.php';
             });
         });
     </script>
+<script>
 
-
-    <script>
-        const bl = document.querySelector("#form_add");
+const bl = document.querySelector("#form_add");
         const close = document.querySelector(".close-icon");
         const add = document.querySelector("#add");
 
@@ -282,6 +281,10 @@ include 'sidbar.php';
 
 
 
+
+
+
+
         const bl2 = document.querySelector("#form_det");
         const close2 = document.querySelector(".close-icon2");
         const det = document.querySelector('.det')
@@ -290,10 +293,13 @@ include 'sidbar.php';
         bl2.style.visibility = "hidden";
 
 
-        det.addEventListener("click", function() {
+        function hadeldetAction(id) {
             bl2.style.opacity = "1";
             bl2.style.visibility = "visible";
-        });
+            var input = document.getElementById('input');
+            input.value = id;
+          
+        };
 
 
         close2.addEventListener("click", function() {
@@ -303,7 +309,6 @@ include 'sidbar.php';
 
         });
     </script>
-
 
     <script>
         function deleteC(id_client) {
@@ -315,31 +320,6 @@ include 'sidbar.php';
                 location.reload();
             }, "500");
         }
-
-
-
-
-        function hadeldetAction() {
-            bl2.style.opacity = "1";
-            bl2.style.visibility = "visible";
-            sessionStorage.setItem("det", true);
-        };
-
-
-
-        function sendClientId(id_client) {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    var id = document.getElementById('id_input');
-
-                    var responseData = JSON.parse(this.responseText);
-                    id.value = responseData.id;
-                }
-            };
-            xhttp.open("GET", "select_client.php?id_client=" + id_client, true);
-            xhttp.send();
-        };
     </script>
 
 </body>
