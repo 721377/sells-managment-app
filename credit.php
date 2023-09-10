@@ -6,6 +6,34 @@ include 'config.php';
 if (!isset($_SESSION['user_name'])) {
     header('location:login_form.php');
 }
+$select_dis = mysqli_query($conn, "SELECT DISTINCT id_client FROM `article`;");
+
+while ($row_dis = mysqli_fetch_assoc($select_dis)) {
+    $montant = 0;
+    $id_client = $row_dis['id_client'];
+    $total = 0; // Initialize total outside of the inner loop
+    $avance = 0; // Initialize avance outside of the inner loop
+
+    $select = mysqli_query($conn, "SELECT `prix`, `quantite`,`name`, `tele`, `avance` FROM `article` a , `client` c WHERE c.id = a.id_client and c.id = '$id_client';");
+
+    while ($row_client = mysqli_fetch_assoc($select)) {
+        // Calculate the total for each client
+        $total += $row_client['prix'] * $row_client['quantite'];
+        $name = $row_client['name'];
+        $tele = $row_client['tele'];
+        $avance = $row_client['avance']; // Update avance for each client
+    }
+
+    if (mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `credit` WHERE name = '$name'")) == 0) {
+        if ($total > $avance) {
+            $montant = $total - $avance;
+            echo ($montant);
+            mysqli_query($conn, "INSERT INTO `credit`(`name`, `montant`, `tele`) VALUES('$name' , '$montant' , '$tele')");
+        }
+    }
+}
+
+
 include 'sidbar.php';
 ?>
 <!DOCTYPE html>
@@ -24,6 +52,42 @@ include 'sidbar.php';
 
 <body>
 
+
+    <div class="bl font1" id="form_add">
+        <div class="form-cont">
+            <form action="add_credit.php" method="post">
+                <i class="bi bi-x-circle close-icon"></i>
+                <div class="icon-form">
+                    <i class="bi bi-person-add"></i>
+
+                </div>
+
+
+                <div class="txt_field">
+                    <input type="text" required id="" name="name" />
+                    <span></span>
+                    <label for=""> *الاسم الكامل</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" required id="" name="tele" />
+                    <span></span>
+                    <label for=""> *رقم الهاتف </label>
+                </div>
+
+                <div class="txt_field">
+                    <input type="text" required id="" name="totale" />
+                    <span></span>
+                    <label for="">*المبلغ </label>
+                </div>
+
+
+                <button class="btn" type="submit">
+                    حفظ
+                </button>
+            </form>
+        </div>
+    </div>
+
     <div class="sersh">
         <div class="group">
             <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
@@ -41,7 +105,10 @@ include 'sidbar.php';
         <div class="top">
             <div class="titel"> ائتمان </div>
 
-
+            <div class="add" id="add">
+                <i class="bi bi-plus-circle"></i>
+                اضافة زبون
+            </div>
         </div>
         <div class="body">
 
@@ -55,14 +122,17 @@ include 'sidbar.php';
                     </Thead>
 
                     <tbody>
-
-                        <tr>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
-
-                        </tr>
+                        <?php
+                        $select_credit = mysqli_query($conn, "SELECT * FROM `credit`");
+                        while ($row = mysqli_fetch_assoc($select_credit)) {
+                        ?>
+                            <tr>
+                                <td><a onclick="deleteC(<?php echo $row['id']; ?>)"><i class="bi bi-trash"></i></a></td>
+                                <td><?= $row['montant'] ?> </td>
+                                <td> <?= $row['tele'] ?> </td>
+                                <td><?= $row['name'] ?> </td>
+                            </tr>
+                        <?php } ?>
 
 
                     </tbody>
@@ -101,5 +171,45 @@ include 'sidbar.php';
     </script>
 
 </body>
+
+
+
+<script>
+    const bl = document.querySelector("#form_add");
+    const close = document.querySelector(".close-icon");
+    const add = document.querySelector("#add");
+
+    if (sessionStorage.getItem("add") === "false") {
+        sessionStorage.setItem("add", false);
+    }
+
+    add.addEventListener("click", function() {
+        bl.style.opacity = "1";
+        bl.style.visibility = "visible";
+        sessionStorage.setItem("add", true);
+    });
+
+    if (sessionStorage.getItem("add") === "true") {
+        bl.style.opacity = "1";
+        bl.style.visibility = "visible";
+    }
+
+    close.addEventListener("click", function() {
+        bl.style.opacity = "0";
+        bl.style.visibility = "hidden";
+        sessionStorage.setItem("add", false);
+    });
+</script>
+<script>
+    function deleteC(id_client) {
+        alert('هل تريد حقا حذف؟');
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "delete_Credit.php?id=" + id_client, true);
+        xhttp.send();
+        setTimeout(() => {
+            location.reload();
+        }, "500");
+    }
+</script>
 
 </html>

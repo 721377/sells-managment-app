@@ -44,6 +44,8 @@ if (isset($_POST['save'])) {
 }
 $select = mysqli_query($conn, "SELECT * FROM `client` WHERE `type_c` ='fidele' ORDER BY id DESC");
 
+
+
 include 'sidbar.php';
 ?>
 <!DOCTYPE html>
@@ -153,9 +155,9 @@ include 'sidbar.php';
                 </div>
                 <input type="hidden" id="input" name="id_cli">
 
-                <input  class="btn" type="submit" name="save" value="  حفظ">
-                  
-               
+                <input class="btn" type="submit" name="save" value="  حفظ">
+
+
             </form>
         </div>
     </div>
@@ -227,7 +229,7 @@ include 'sidbar.php';
 
 
     </div>
-   
+
 
     <!-- form the sersh -->
     <script>
@@ -259,11 +261,6 @@ include 'sidbar.php';
 
 
     <script>
-       
-
-
-
-
         const bl = document.querySelector("#form_add");
         const close = document.querySelector(".close-icon");
         const add = document.querySelector("#add");
@@ -308,7 +305,7 @@ include 'sidbar.php';
             bl2.style.visibility = "visible";
             var input = document.getElementById('input');
             input.value = id;
-          
+
         };
 
 

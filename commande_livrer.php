@@ -16,7 +16,7 @@ if (isset($_GET['id'])) {
 }
 
 
-$select = mysqli_query($conn, "SELECT c.id as id_c, c.name, c.tele, c.avance, c.ville, c.address FROM commande_online cm, client c WHERE c.id = cm.id_client ");
+$select = mysqli_query($conn, "SELECT cm.id as id_comm, c.id as id_c, c.name, c.tele, c.avance, c.ville, c.address, c.type_c FROM commande_online cm, client c WHERE c.id = cm.id_client ");
 
 include 'sidbar.php';
 ?>
@@ -63,11 +63,10 @@ include 'sidbar.php';
                 <i class="bi bi-filter-circle"></i>
                 <div class="combobox">
                     <select id="sportFilter" name="" id="" class="select font3">
-                        <option value="" disabled selected>sport</option>
-                        <option value="K1">K1</option>
-                        <option value="aikido">aikido</option>
-                        <option value="Box">Box</option>
-                        <option value="musculation">musculation</option>
+                        <option value="" disabled selected>نوع العميل</option>
+                        <option value="جديد">جديد</option>
+                        <option value="مخلص">مخلص</option>
+
 
                     </select>
                 </div>
@@ -79,10 +78,13 @@ include 'sidbar.php';
             <div class="table">
                 <table>
                     <Thead>
-                        <th colspan="6">العمليات</th>
+                        <th colspan="5">العمليات</th>
+                        <th> المبلغ الاجمالي </th>
+                        <th> المبلغ الباقي </th>
+                        <th>نوع العميل</th>
                         <th>عنوان</th>
                         <th>مدينة</th>
-                        <th>مبلغ سلف</th>
+                        <th>مبلغ المقدم</th>
                         <th> رقم الهاتف</th>
                         <th> صاحب الطلبية</th>
 
@@ -97,16 +99,30 @@ include 'sidbar.php';
 
 
                                 <td>
-                                    <div onclick="open_form()" class="a"><i class="bi bi-plus-circle"></i></div>
+                                    <div onclick="open_form() ; sendIdoforAdd(<?= $row['id_c'] ?>)" class="a"><i class="bi bi-plus-circle"></i></div>
                                 </td>
                                 <td>
                                     <div onclick="open_min() ; sendClientId(<?= $row['id_c'] ?>)" class="at"><i class="bi bi-dash-circle"></i></div>
                                 </td>
-                                <td><a href=""><i class="bi bi-pen"></i></a></td>
-                                <td><a href=""><i class="bi bi-trash"></i></a></td>
+                                <td><a href="delete_commande_online.php?id=<?= $row['id_c'] ?>"><i class="bi bi-trash"></i></a></td>
                                 <td><a href=""><i class="bi bi-check2"></i></a></td>
                                 <td><a href=""><i class="bi bi-printer"></i></a></td>
 
+                                <td><?php
+                                    $client = $row['id_c'];
+                                    $totale = 0;
+                                    $selet_articels = mysqli_query($conn, "SELECT * FROM `article` WHERE id_client = '$client'");
+                                    while ($prices = mysqli_fetch_assoc($selet_articels)) {
+                                        $totale = $totale + $prices['prix'] * $prices['quantite'];
+                                    }
+                                    echo  $totale;
+                                    ?></td>
+                                <td><?php echo $totale - $row['avance']  ?></td>
+                                <td><?php if ($row['type_c'] == "nouveau") {
+                                        echo ('جديد');
+                                    } else {
+                                        echo ('مخلص');
+                                    } ?></td>
                                 <td><?= $row['address'] ?></td>
                                 <td><?= $row['ville'] ?></td>
                                 <td><?= $row['avance'] ?></td>
@@ -167,12 +183,12 @@ include 'sidbar.php';
 
     <div class="bl font1" id="form_add">
         <div class="form-cont">
-            <form action="" method="post">
+            <form action="add_com.php" method="post">
                 <i class="bi bi-x-circle close-icon"></i>
                 <div class="icon-form">
                     <i class="bi bi-basket2-fill"></i>
                 </div>
-                <div class="client-n"><i class="bi bi-person-bounding-box"></i>Nom du client : Mohamed labide</div>
+                <!-- <div class="client-n"><i class="bi bi-person-bounding-box"></i>Nom du client : Mohamed labide</div> -->
                 <div class="text-submit">
                     <div class="txt_field">
                         <input type="text" required id="" name="item" />
@@ -188,7 +204,8 @@ include 'sidbar.php';
                     </div>
 
 
-
+                    <input type="hidden" id="input" name="client">
+                    <input type="hidden" value="livrer" name="type_comm">
                     <button class="btn" type="submit" name="save">
                         إضافة الطلب
                     </button>
@@ -268,6 +285,30 @@ include 'sidbar.php';
     </script>
 
 
+    <!-- for the select filter -->
+
+    <script>
+        $(document).ready(function() {
+            $("#sportFilter").on("change", function() {
+                var selectedSport = $(this).val(); // Get the selected sport from the select element
+
+                $("tbody tr").each(function() {
+                    // Loop through each row in the tbody
+                    var rowSport = $(this).find("td:eq(6)").text(); // Get the text of the "sport" td in the current row
+
+                    if (selectedSport === "" || rowSport === selectedSport) {
+                        // If no sport is selected or the row's sport matches the selected sport, show the row
+                        $(this).show();
+                    } else {
+                        // Otherwise, hide the row
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+    </script>
+
+
     <script>
         $(document).ready(function() {
 
@@ -311,7 +352,7 @@ include 'sidbar.php';
                         row.innerHTML = `
                     <td>${item.prix}</td>
                     <td>${item.quantite}</td>
-                    <td><a href="delete_item.php?id=${item.id}"><i class="bi bi-trash"></i></a></td>
+                    <td><a href="delete_item.php?id=${item.id}&type=livere"><i class="bi bi-trash"></i></a></td>
                 `;
                         table.appendChild(row);
                     });
@@ -319,6 +360,14 @@ include 'sidbar.php';
             };
             xhttp.open("GET", "select_article.php?id_client=" + id_client, true);
             xhttp.send();
+        }
+
+
+
+
+        function sendIdoforAdd(id) {
+            var input = document.getElementById('input');
+            input.value = id;
         }
     </script>
 

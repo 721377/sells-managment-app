@@ -4,7 +4,7 @@ include 'cryptfunction.php';
 
 $stmt = mysqli_stmt_init($conn);
 
-$type = $_POST['type'];
+$item = $_POST['item'];
 $id_cli = $_POST['id_cli'];
 $articl = $_POST['art'];
 $qun =  $_POST['qun'];
@@ -32,71 +32,63 @@ if (!mysqli_stmt_prepare($stmt, $sql_n)) {
     } else {
         mysqli_stmt_bind_param($stmt, "sss", $articl, $qun, $id_cli);
         if (mysqli_stmt_execute($stmt)) {
-            // Article insertion successful, get the inserted article's ID
-            $selct_id_item = "SELECT id FROM article WHERE id_client = ?";
-            if (!mysqli_stmt_prepare($stmt, $selct_id_item)) {
-                echo "Error: SQL prepare failed for article selection";
-            } else {
-                mysqli_stmt_bind_param($stmt, "i", $id_cli);
-                mysqli_stmt_execute($stmt);
-                $result_id_item = mysqli_stmt_get_result($stmt);
-                $row_id_item = mysqli_fetch_assoc($result_id_item);
 
-                if ($type == "normale") {
-                    // Check if there is an existing command for this client
-                    $sql = "SELECT * FROM `commande_local` WHERE id_client = ?";
-                    if (!mysqli_stmt_prepare($stmt, $sql)) {
-                        echo "Error: SQL prepare failed for commande_local selection";
+
+
+            if ($type == "normale") {
+                // Check if there is an existing command for this client
+                $sql = "SELECT * FROM `commande_local` WHERE id_client = ?";
+                if (!mysqli_stmt_prepare($stmt, $sql)) {
+                    echo "Error: SQL prepare failed for commande_local selection";
+                } else {
+                    mysqli_stmt_bind_param($stmt, "i", $id_cli);
+                    mysqli_stmt_execute($stmt);
+                    $result_commande = mysqli_stmt_get_result($stmt);
+                    if (mysqli_num_rows($result_commande) > 0) {
+                        header('location:commande_normale.php?id=' . encryptId($row_c['name']));
                     } else {
-                        mysqli_stmt_bind_param($stmt, "i", $id_cli);
-                        mysqli_stmt_execute($stmt);
-                        $result_commande = mysqli_stmt_get_result($stmt);
-                        if (mysqli_num_rows($result_commande) > 0) {
-                            header('location:commande_normale.php?id=' . encryptId($row_c['name']));
+                        $insert = "INSERT INTO `commande_local`(`id_client`, `total`) VALUES (?, ?)";
+                        if (!mysqli_stmt_prepare($stmt, $insert)) {
+                            echo "Error: SQL prepare failed for commande_local insertion";
                         } else {
-                            $insert = "INSERT INTO `commande_local`(`id_client`, `total`, `id_article`) VALUES (?, ?, ?)";
-                            if (!mysqli_stmt_prepare($stmt, $insert)) {
-                                echo "Error: SQL prepare failed for commande_local insertion";
-                            } else {
-                                mysqli_stmt_bind_param($stmt, "sss", $id_cli, $total, $row_id_item['id']);
-                                if (mysqli_stmt_execute($stmt)) {
-                                    if ($row_c['type_c'] == "fidele") {
-                                        header('location:client_f.php');
-                                    } else {
-                                        header('location:client_n.php');
-                                    }
+                            mysqli_stmt_bind_param($stmt, "ss", $id_cli, $total);
+                            if (mysqli_stmt_execute($stmt)) {
+                                if ($row_c['type_c'] == "fidele") {
+                                    header('location:client_f.php');
                                 } else {
-                                    echo "Error: Failed to insert into commande_local";
+                                    header('location:client_n.php');
                                 }
+                            } else {
+                                echo "Error: Failed to insert into commande_local";
                             }
                         }
                     }
+                }
+            } else {
+                // Check if there is an existing command for this client
+                $sql = "SELECT * FROM `commande_online` WHERE id_client = ?";
+                if (!mysqli_stmt_prepare($stmt, $sql)) {
+                    echo "Error: SQL prepare failed for commande_online selection";
                 } else {
-                    // Check if there is an existing command for this client
-                    $sql = "SELECT * FROM `commande_online` WHERE id_client = ?";
-                    if (!mysqli_stmt_prepare($stmt, $sql)) {
-                        echo "Error: SQL prepare failed for commande_online selection";
+                    mysqli_stmt_bind_param($stmt, "i", $id_cli);
+                    mysqli_stmt_execute($stmt);
+                    $result_commande = mysqli_stmt_get_result($stmt);
+                    if (mysqli_num_rows($result_commande) > 0) {
+                        header('location:commande_livrer.php?id=' . encryptId($row_c['name']));
                     } else {
-                        mysqli_stmt_bind_param($stmt, "i", $id_cli);
-                        mysqli_stmt_execute($stmt);
-                        $result_commande = mysqli_stmt_get_result($stmt);
-                        if (mysqli_num_rows($result_commande) > 0) {
-                            header('location:commande_livrer.php?id=' . encryptId($row_c['name']));
+                        $insert = "INSERT INTO `commande_online`(`id_client`, `etape`, `total`) VALUES (?, 'etape1', ?)";
+                        if (!mysqli_stmt_prepare($stmt, $insert)) {
+                            echo "Error: SQL prepare failed for commande_online insertion";
                         } else {
-                            $insert = "INSERT INTO `commande_online`(`id_client`, `etape`, `total`, `id_article`) VALUES (?, 'etape1', ?, ?)";
-                            if (!mysqli_stmt_prepare($stmt, $insert)) {
-                                echo "Error: SQL prepare failed for commande_online insertion";
-                            } else {
-                                mysqli_stmt_bind_param($stmt, "sss", $id_cli, $total, $row_id_item['id']);
-                                if (mysqli_stmt_execute($stmt)) {
-                                    if ($row_c['type_c'] == "fidele") {
-                                        header('location:client_f.php');
-                                    } else {
-                                        header('location:client_n.php');
-                                    }
+                            mysqli_stmt_bind_param($stmt, "ss", $id_cli, $total);
+                            if (mysqli_stmt_execute($stmt)) {
+                                if ($row_c['type_c'] == "fidele") {
+                                    header('location:client_f.php');
                                 } else {
-                                    echo "Error: Failed to insert into commande_online";
+                                    header('location:client_n.php');
                                 }
+                            } else {
+                                echo "Error: Failed to insert into commande_online";
                             }
                         }
                     }
@@ -107,4 +99,3 @@ if (!mysqli_stmt_prepare($stmt, $sql_n)) {
         }
     }
 }
-?>

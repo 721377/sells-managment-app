@@ -30,7 +30,7 @@ if (isset($_POST['save'])) {
 
 
         if (mysqli_num_rows($result) > 0) {
-            $error = "العميل موجود بالفعل!";
+            $error = "!العميل موجود بالفعل";
         } else {
 
             $insert = "INSERT INTO `client`(`name`, `address`, `ville`, `tele`, `type_c`, `avance`) VALUES (?,?,?,?, 'nouveau',?);";
@@ -252,9 +252,8 @@ include 'sidbar.php';
             });
         });
     </script>
-<script>
-
-const bl = document.querySelector("#form_add");
+    <script>
+        const bl = document.querySelector("#form_add");
         const close = document.querySelector(".close-icon");
         const add = document.querySelector("#add");
 
@@ -298,7 +297,7 @@ const bl = document.querySelector("#form_add");
             bl2.style.visibility = "visible";
             var input = document.getElementById('input');
             input.value = id;
-          
+
         };
 
 
