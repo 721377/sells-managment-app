@@ -300,8 +300,10 @@ $select = mysqli_query($conn, "SELECT cm.id as id_comm, c.id as id_c, c.name, c.
 
     <script>
         function text_but() {
+
+            console.log("hamzakljskjsd");
             var textButton = document.getElementById("text_button");
-            textButton.style.display = "visible";
+            textButton.style.visibility = "visible";
 
         }
     </script>
@@ -459,16 +461,9 @@ $select = mysqli_query($conn, "SELECT cm.id as id_comm, c.id as id_c, c.name, c.
 
 
     <script>
-        function updateEtape1(etape) {
+        function updateEtape(etape) {
             var xhttp = new XMLHttpRequest();
 
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    const responseData = JSON.parse(this.responseText);
-
-
-                }
-            }
             var inputCm = document.getElementById('inputCm').value;
             console.log(etape);
             xhttp.open("GET", "valider_etape_commande.php?id=" + inputCm + "&etape=" + etape, true);
@@ -501,26 +496,6 @@ $select = mysqli_query($conn, "SELECT cm.id as id_comm, c.id as id_c, c.name, c.
     </script>
 
     <script>
-        function updateEtape2(etape) {
-            var xhttp = new XMLHttpRequest();
-
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    const responseData = JSON.parse(this.responseText);
-                    if (responseData.var === "checked") {
-                        document.getElementById("02").checked = true;
-                    }
-                }
-            }
-            var inputCm = document.getElementById('inputCm').value;
-            xhttp.open("GET", "valider_etape_commande.php?id=" + inputCm + "&etape=" + etape, true);
-            xhttp.send();
-        }
-
-
-
-
-
         function checkInputAutomatically(id) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {

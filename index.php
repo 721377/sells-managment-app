@@ -39,13 +39,18 @@ if (!isset($_SESSION['user_name'])) {
                 <h2>الزبناء الجدد</h2>
                 <h1><?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM client WHERE `type_c` ='nouveau'")) ?></h1>
             </a>
+            <?php
 
-            <a class="box" href="etape_livraison.php">
-                <i class="bi bi-truck"></i>
-                <h2>المستخدمين</h2>
-                <h1><?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users")) ?></h1>
+            if ($_SESSION['user_type'] == "admin") {
 
-            </a>
+            ?>
+                <a class="box" href="users.php">
+                    <i class="bi bi-truck"></i>
+                    <h2>المستخدمين</h2>
+                    <h1><?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users")) ?></h1>
+
+                </a>
+            <?php } ?>
             <?php
 
             if ($_SESSION['user_type'] == "admin") {

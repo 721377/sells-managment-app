@@ -6,7 +6,7 @@ include 'sidbar.php';
 if (!isset($_SESSION['user_name'])) {
     header('location:login_form.php');
 }
-$date = date('Y M D');
+$date = date('Y-m-d');
 $select_dis = mysqli_query($conn, "SELECT DISTINCT id_client FROM `article`;");
 
 while ($row_dis = mysqli_fetch_assoc($select_dis)) {
@@ -30,6 +30,15 @@ while ($row_dis = mysqli_fetch_assoc($select_dis)) {
             $montant = $total - $avance;
             echo ($montant);
             mysqli_query($conn, "INSERT INTO `credit`(`name`, `montant`, `tele`, `dat`) VALUES('$name' , '$montant' , '$tele', '$date')");
+        }
+    }
+
+    $select_etape = mysqli_query($conn, "SELECT c.tele, cm.etape FROM commande_online cm , client c  WHERE cm.id_client = c.id and c.id = '$id_client';");
+    $row_etape = mysqli_fetch_assoc($select_etape);
+    if (isset($row_etape['etape'])) {
+        if ($row_etape['etape'] == "etape2" || $row_etape['etape'] == "etape3" || !isset($row_etape['etape'])) {
+            $tele = $row_etape['tele'];
+            mysqli_query($conn, "DELETE FROM `credit` WHERE tele = '$tele';");
         }
     }
 }
