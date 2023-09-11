@@ -22,7 +22,7 @@ if ($result) {
     }
     if ($etape == "etape4") {
         $select2 = mysqli_query($conn, "SELECT * FROM commande_online  WHERE id = '$id';");
-        $row2 = mysqli_fetch_assoc($select2); 
+        $row2 = mysqli_fetch_assoc($select2);
 
         $id_client = $row2['id_client'];
         $liv = $row2['N_livraison'];
@@ -37,4 +37,3 @@ if ($result) {
         }
     }
 }
-?>

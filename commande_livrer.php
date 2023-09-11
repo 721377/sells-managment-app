@@ -30,6 +30,7 @@ include 'sidbar.php';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="css/client.css">
 
+
     <title> الطلبات التي سيتم تسليمها</title>
 </head>
 
@@ -105,7 +106,7 @@ include 'sidbar.php';
                                     <div onclick="open_min() ; sendClientId(<?= $row['id_c'] ?>)" class="at"><i class="bi bi-dash-circle"></i></div>
                                 </td>
                                 <td><a href="delete_commande_online.php?id=<?= $row['id_c'] ?>"><i class="bi bi-trash"></i></a></td>
-                                <td><a onclick="open_etape(<?= $row['id_comm'] ?>)"><i class="bi bi-archive"></i></i></a></td>
+                                <td><a onclick="open_etape(<?= $row['id_comm'] ?>) ; checkInputAutomatically(<?= $row['id_comm'] ?>)"><i class="bi bi-archive"></i></i></a></td>
                                 <td><a href=""><i class="bi bi-printer"></i></a></td>
 
                                 <td><?php
@@ -238,29 +239,29 @@ include 'sidbar.php';
                 </div>
 
                 <div id="checklist">
-                    <input checked="" onclick="updateEtape('etape1')" value="1" name="r" type="checkbox" id="01">
+                    <input onclick="updateEtape('etape1')" value="1" name="r" type="checkbox" id="01">
                     <label for="01">في طور التحضير</label>
                     <input value="2" onclick="updateEtape('etape2')" name="r" type="checkbox" id="02">
                     <label for="02">تم الدفع</label>
                     <input value="3" onclick="text_but()" name="r" type="checkbox" id="03">
                     <label for="03">في طور لإرسال</label>
-                    <input value="3" onclick="updateEtape('etape4')" name="r" type="checkbox" id="03">
-                    <label for="03">تم لإرسال</label>
+                    <input value="3" onclick="updateEtape('etape4')" name="r" type="checkbox" id="04">
+                    <label for="04">تم لإرسال</label>
                 </div>
-                 <div class="text_button" id="text_button">
+                <div class="text_button" id="text_button">
 
-                <div class="txt_field">
+                    <div class="txt_field">
                         <input type="text" required id="inputliv" name="" />
                         <span></span>
                         <label for="">شركة الارسال</label>
                     </div>
 
                     <button class="btn" onclick="updateEtape_liv('etape3')" type="submit" name="save">
-                    حفظ المرحلة
-                </button>
-                    </div>
+                        حفظ المرحلة
+                    </button>
+                </div>
                 <input type="hidden" name="" id="inputCm">
-                
+
 
             </form>
         </div>
@@ -292,16 +293,18 @@ include 'sidbar.php';
         close3.onclick = function() {
             bl3.style.opacity = "0";
             bl3.style.visibility = "hidden";
+            setTimeout(() => {
+                location.reload();
+            }, "20");
         }
-
     </script>
 
     <script>
-         function text_but() {
-    var textButton = document.getElementById("text_button");
-        textButton.style.visibility = "visible";
-    
-}
+        function text_but() {
+            var textButton = document.getElementById("text_button");
+            textButton.style.display = "visible";
+
+        }
     </script>
 
     <script>
@@ -457,20 +460,36 @@ include 'sidbar.php';
 
 
     <script>
-        function updateEtape(etape) {
+        function updateEtape1(etape) {
             var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    const responseData = JSON.parse(this.responseText);
+
+
+                }
+            }
             var inputCm = document.getElementById('inputCm').value;
             console.log(etape);
-            xhttp.open("GET", "valider_etape_commande.php?id="+ inputCm + "&etape="+ etape, true);
+            xhttp.open("GET", "valider_etape_commande.php?id=" + inputCm + "&etape=" + etape, true);
             xhttp.send();
 
         }
+
         function updateEtape_liv(etape) {
             var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    const responseData = JSON.parse(this.responseText);
+
+
+                }
+            }
             var inputCm = document.getElementById('inputCm').value;
             var liv = document.getElementById('inputliv').value;
             console.log(liv);
-            xhttp.open("GET", "valider_etape_commande.php?id="+ inputCm + "&etape="+ etape + "&nlive="+ liv, true);
+            xhttp.open("GET", "valider_etape_commande.php?id=" + inputCm + "&etape=" + etape + "&nlive=" + liv, true);
             xhttp.send();
 
         }
@@ -482,6 +501,63 @@ include 'sidbar.php';
         }
     </script>
 
+    <script>
+        function updateEtape2(etape) {
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    const responseData = JSON.parse(this.responseText);
+                    if (responseData.var === "checked") {
+                        document.getElementById("02").checked = true;
+                    }
+                }
+            }
+            var inputCm = document.getElementById('inputCm').value;
+            xhttp.open("GET", "valider_etape_commande.php?id=" + inputCm + "&etape=" + etape, true);
+            xhttp.send();
+        }
+
+
+
+
+
+        function checkInputAutomatically(id) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState === 4) {
+                    if (this.status === 200) {
+                        const responseData = JSON.parse(this.responseText);
+                        console.log(responseData.var);
+                        if (responseData.var === "etape1") {
+                            console.log(1);
+                            document.getElementById("01").checked = true;
+                        } else if (responseData.var === "etape2") {
+                            console.log(2);
+                            document.getElementById("01").checked = true;
+                            document.getElementById("02").checked = true;
+                        } else if (responseData.var === "etape3") {
+                            console.log(3);
+                            document.getElementById("01").checked = true;
+                            document.getElementById("02").checked = true;
+                            document.getElementById("03").checked = true;
+                        } else if (responseData.var === "etape4") {
+                            console.log(4);
+                            document.getElementById("01").checked = true;
+                            document.getElementById("02").checked = true;
+                            document.getElementById("03").checked = true;
+                            document.getElementById("04").checked = true;
+                        }
+                    } else {
+                        console.error("AJAX request failed with status code: " + this.status);
+                    }
+                }
+            };
+
+            xhttp.open("GET", "check_etape.php?id=" + id, true);
+            xhttp.send();
+        }
+    </script>
 
 </body>
 
