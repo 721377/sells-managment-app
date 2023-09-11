@@ -1,14 +1,13 @@
 <?php
-session_start();
 
 include 'config.php';
+include 'sidbar.php';
 
 if (!isset($_SESSION['user_name'])) {
     header('location:login_form.php');
 }
 
 
-include 'sidbar.php';
 
 ?>
 <!DOCTYPE html>
@@ -43,19 +42,23 @@ include 'sidbar.php';
 
             <a class="box" href="etape_livraison.php">
                 <i class="bi bi-truck"></i>
-                <h2>الطلبات قيد الشحن</h2>
-                <h1><?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM commande_online WHERE `etape` ='etap2'")) ?></h1>
+                <h2>المستخدمين</h2>
+                <h1><?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users")) ?></h1>
 
             </a>
+            <?php
 
-            <a class="box" href="transactions_pr.php">
-                <i class="bi bi-person-fill-lock"></i>
-                <h2>معاملات الخاصة</h2>
-                <h1><?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `fornisseur`")) ?></h1>
+            if ($_SESSION['user_type'] == "admin") {
 
-            </a>
+            ?>
+                <a class="box" href="transactions_pr.php">
+                    <i class="bi bi-person-fill-lock"></i>
+                    <h2>معاملات الخاصة</h2>
+                    <h1><?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `fornisseur`")) ?></h1>
 
+                </a>
 
+            <?php } ?>
         </div>
     </div>
 

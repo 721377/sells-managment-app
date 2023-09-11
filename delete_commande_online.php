@@ -23,7 +23,6 @@ if (isset($_GET['id'])) {
         } else {
             mysqli_stmt_bind_param($stmt2, "i", $code);
             mysqli_stmt_execute($stmt2);
-            header('location:commande_livrer.php');
         }
     }
 }

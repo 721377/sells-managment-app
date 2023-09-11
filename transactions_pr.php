@@ -1,51 +1,18 @@
 <?php
-session_start();
 
 include 'config.php';
+include 'sidbar.php';
 
 if (!isset($_SESSION['user_name'])) {
     header('location:login_form.php');
 }
 
 
-$stmt = mysqli_stmt_init($conn);
 
-if (isset($_POST['save'])) {
-    $nom_f = $_POST['name'];
-    $tele =  $_POST['tele'];
-    $monta = $_POST['m_tot'];
-    $avance = $_POST['avance'];
-
-
-
-
-    $select = "SELECT * FROM `fornisseur` WHERE `name` = ?";
-    if (!mysqli_stmt_prepare($stmt, $select)) {
-        $error[] = "select is failed";
-    } else {
-        mysqli_stmt_bind_param($stmt, "s", $nom_f);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-    }
-    if (mysqli_num_rows($result) > 0) {
-        $error[] = "! المورد الموجود سابقا ";
-    } else {
-
-        $insert = "INSERT INTO `fornisseur`(`name`, `tele`, `total`, `avance`) VALUES (?,?,?,?);";
-        if (!mysqli_stmt_prepare($stmt, $insert)) {
-            $error[] = "insert is failed";
-        } else {
-            mysqli_stmt_bind_param($stmt, "ssss", $nom_f, $tele, $monta, $avance);
-            mysqli_stmt_execute($stmt);
-            header('location:transactions_pr.php');
-        }
-    }
-}
 
 $select = mysqli_query($conn, "SELECT * FROM `fornisseur`  ORDER BY id DESC");
 
 
-include 'sidbar.php';
 
 ?>
 <!DOCTYPE html>
@@ -66,7 +33,7 @@ include 'sidbar.php';
 
     <div class="bl font1" id="form_add">
         <div class="form-cont">
-            <form action="" method="post">
+            <form action="add-tran.php" method="post">
                 <i class="bi bi-x-circle close-icon"></i>
                 <div class="icon-form">
                     <i class="bi bi-person-add"></i>
@@ -143,7 +110,7 @@ include 'sidbar.php';
                     <tbody>
                         <?php while ($row = mysqli_fetch_assoc($select)) { ?>
                             <tr>
-                                <td><a href="delet_f.php?id=<?= $row['id'] ?>"><i class="bi bi-trash"></i></a></td>
+                                <td><a onclick="deleteC(<?= $row['id'] ?>)"><i class="bi bi-trash"></i></a></td>
                                 <td><a href="editer_f.php?id=<?= $row['id'] ?>"><i class="bi bi-pen"></i></a></td>
                                 <td><?= $row['total'] . " Dhs" ?></td>
                                 <td><?= $row['avance'] . " Dhs" ?></td>
@@ -215,6 +182,19 @@ include 'sidbar.php';
             sessionStorage.setItem("add", false);
         });
     </script>
+
+    <script>
+        function deleteC(id_client) {
+            alert('هل تريد حقا حذف؟');
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "delet_f.php?id=" + id_client, true);
+            xhttp.send();
+            setTimeout(() => {
+                location.reload();
+            }, "500");
+        }
+    </script>
+
 
 </body>
 

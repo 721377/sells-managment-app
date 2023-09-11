@@ -1,14 +1,14 @@
 <?php
-session_start();
 
 include 'config.php';
-
+include 'sidbar.php';
 if (!isset($_SESSION['user_name'])) {
     header('location:login_form.php');
 }
 
+$select = mysqli_query($conn, "SELECT cm.id as id_comm, c.id as id_c, c.name,  cm.type , cm.N_livraison FROM command_fini cm, client c WHERE c.id = cm.id_client ");
 
-include 'sidbar.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,11 +46,10 @@ include 'sidbar.php';
                 <i class="bi bi-filter-circle"></i>
                 <div class="combobox">
                     <select id="sportFilter" name="" id="" class="select font3">
-                        <option value="" disabled selected>sport</option>
-                        <option value="K1">K1</option>
-                        <option value="aikido">aikido</option>
-                        <option value="Box">Box</option>
-                        <option value="musculation">musculation</option>
+                        <option value="" disabled selected> نوع الطلبية</option>
+                        <option value="تم تسليمها">تم تسليمها</option>
+                        <option value="عادية">عادية</option>
+
 
                     </select>
                 </div>
@@ -63,22 +62,33 @@ include 'sidbar.php';
                 <table>
                     <Thead>
                         <th>العمليات</th>
-                        <th>نوع الطلبية</th>
+                        <th> نوع الطلبية</th>
                         <th> شركة توصيل</th>
                         <th> اسم الزبون</th>
 
                     </Thead>
 
                     <tbody>
+                        <?php while ($row = mysqli_fetch_assoc($select)) { ?>
+                            <tr>
+                                <td><a onclick="deleteC(<?php echo $row['id_comm']; ?>)"><i class="bi bi-trash"></i></a></td>
+                                <td><?php
+                                    if ($row['type'] == "normale") {
+                                        echo "عادية";
+                                    } else {
+                                        echo "تم تسليمها";
+                                    } ?></td>
+                                <td><?php
 
-                        <tr>
-                            <td><a href=""><i class="bi bi-trash"></i></a></td>
-                            <td>20028</td>
-                            <td>محمد لبيد</td>
-                            <td>تانوية الكيندي</td>
+                                    if ($row['N_livraison'] == "") {
+                                        echo "__";
+                                    } else {
+                                        echo $row['N_livraison'];
+                                    } ?></td>
+                                <td> <?= $row['name'] ?></td>
 
-                        </tr>
-
+                            </tr>
+                        <?php } ?>
 
                     </tbody>
                 </table>
@@ -113,6 +123,42 @@ include 'sidbar.php';
                 });
             });
         });
+    </script>
+
+    <!-- for the select filter -->
+
+    <script>
+        $(document).ready(function() {
+            $("#sportFilter").on("change", function() {
+                var selectedSport = $(this).val(); // Get the selected sport from the select element
+
+                $("tbody tr").each(function() {
+                    // Loop through each row in the tbody
+                    var rowSport = $(this).find("td:eq(1)").text(); // Get the text of the "sport" td in the current row
+
+                    if (selectedSport === "" || rowSport === selectedSport) {
+                        // If no sport is selected or the row's sport matches the selected sport, show the row
+                        $(this).show();
+                    } else {
+                        // Otherwise, hide the row
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    <script>
+        function deleteC(id) {
+            alert('هل تريد حقا حذف؟');
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "delete_commande_fini.php?id=" + id, true);
+            xhttp.send();
+            setTimeout(() => {
+                location.reload();
+            }, "500");
+        }
     </script>
 
 </body>

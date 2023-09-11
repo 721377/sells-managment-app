@@ -1,9 +1,9 @@
 <?php
-session_start();
 
 include 'config.php';
 include 'cryptfunction.php';
 
+include 'sidbar.php';
 
 
 if (!isset($_SESSION['user_name'])) {
@@ -18,7 +18,6 @@ if (isset($_GET['id'])) {
 
 $select = mysqli_query($conn, "SELECT cm.id as id_comm, c.id as id_c, c.name, c.tele, c.avance, c.ville, c.address, c.type_c FROM commande_online cm, client c WHERE c.id = cm.id_client ");
 
-include 'sidbar.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -105,7 +104,7 @@ include 'sidbar.php';
                                 <td>
                                     <div onclick="open_min() ; sendClientId(<?= $row['id_c'] ?>)" class="at"><i class="bi bi-dash-circle"></i></div>
                                 </td>
-                                <td><a href="delete_commande_online.php?id=<?= $row['id_c'] ?>"><i class="bi bi-trash"></i></a></td>
+                                <td><a onclick="deleteC(<?php echo $row['id_c']; ?>)"><i class="bi bi-trash"></i></a></td>
                                 <td><a onclick="open_etape(<?= $row['id_comm'] ?>) ; checkInputAutomatically(<?= $row['id_comm'] ?>)"><i class="bi bi-archive"></i></i></a></td>
                                 <td><a href=""><i class="bi bi-printer"></i></a></td>
 
@@ -437,7 +436,7 @@ include 'sidbar.php';
                         row.innerHTML = `
                     <td>${item.prix}</td>
                     <td>${item.quantite}</td>
-                    <td><a href="delete_item.php?id=${item.id}&type=livere"><i class="bi bi-trash"></i></a></td>
+                    <td><a onclick="deleteitem(${item.id})"><i class="bi bi-trash"></i></a></td>
                 `;
                         table.appendChild(row);
                     });
@@ -556,6 +555,29 @@ include 'sidbar.php';
 
             xhttp.open("GET", "check_etape.php?id=" + id, true);
             xhttp.send();
+        }
+    </script>
+    <script>
+        function deleteC(id_client) {
+            alert('هل تريد حقا حذف؟');
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "delete_commande_online.php?id=" + id_client, true);
+            xhttp.send();
+            setTimeout(() => {
+                location.reload();
+            }, "500");
+        }
+    </script>
+
+    <script>
+        function deleteitem(id_client) {
+            alert('هل تريد حقا حذف؟');
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "delete_item.php?id=" + id_client, true);
+            xhttp.send();
+            setTimeout(() => {
+                location.reload();
+            }, "500");
         }
     </script>
 

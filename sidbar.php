@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,6 +59,7 @@
                     <a onclick="checkPageWidth()" href="commande_finie.php">
                         <div class="inert">
                             <span></span>
+                            <i class="bi bi-bag-check-fill"></i>
                             <h4 class="font1">الطلبات المنتهية</h4>
                         </div>
                     </a>
@@ -93,13 +98,20 @@
                         <h3 class="font1">ائتمان</h3>
                     </li>
                 </a>
-                <a onclick="checkPageWidth()" href="users.php">
-                    <li tabindex="0" class="list_focus">
-                        <span></span>
-                        <i class="bi bi-person-gear sidicons"></i>
-                        <h3 class="font1">المستخدمين</h3>
-                    </li>
-                </a>
+
+                <?php
+
+                if ($_SESSION['user_type'] == "admin") {
+
+                ?>
+                    <a onclick="checkPageWidth()" href="users.php">
+                        <li tabindex="0" class="list_focus">
+                            <span></span>
+                            <i class="bi bi-person-gear sidicons"></i>
+                            <h3 class="font1">المستخدمين</h3>
+                        </li>
+                    </a>
+                <?php } ?>
             </ul>
         </nav>
         <a href="logout.php">

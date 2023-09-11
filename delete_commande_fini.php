@@ -8,7 +8,7 @@ if (isset($_GET['id'])) {
     $code = $_GET['id'];
 
     try {
-        $sql = "DELETE FROM `fornisseur` WHERE id=? ; ";
+        $sql = "DELETE FROM `command_fini` WHERE id=? ; ";
         $stmt = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
             echo ("delete client failed");

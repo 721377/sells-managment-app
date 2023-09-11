@@ -1,9 +1,8 @@
 <?php
-session_start();
 
 include 'config.php';
 include 'cryptfunction.php';
-
+include 'sidbar.php';
 if (!isset($_SESSION['user_name'])) {
     header('location:login_form.php');
 }
@@ -13,7 +12,7 @@ if (!isset($_SESSION['user_name'])) {
 
 $select = mysqli_query($conn, "SELECT cm.id as id_comm, c.id as id_c, c.name, c.tele, c.avance, c.ville, c.address, c.type_c FROM commande_local cm, client c WHERE c.id = cm.id_client;");
 
-include 'sidbar.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -98,7 +97,7 @@ include 'sidbar.php';
                                 <td>
                                     <div onclick="open_min() ; sendClientId(<?= $row['id_c'] ?>)" class="at"><i class="bi bi-dash-circle"></i></div>
                                 </td>
-                                <td><a href="delete_commande_locale.php?id=<?= $row['id_c'] ?>"><i class="bi bi-trash"></i></a></td>
+                                <td><a onclick="deleteC(<?php echo $row['id_c']; ?>)"><i class="bi bi-trash"></i></a></td>
                                 <td><a onclick="validerCommande(<?= $row['id_c'] ?>,<?= $row['id_comm'] ?>, 'normale')"><i class="bi bi-check2"></i></a></td>
                                 <td><a href=""><i class="bi bi-printer"></i></a></td>
 
@@ -338,7 +337,7 @@ include 'sidbar.php';
                         row.innerHTML = `
                     <td>${item.prix}</td>
                     <td>${item.quantite}</td>
-                    <td><a href="delete_item.php?id=${item.id}&type=normale""><i class="bi bi-trash"></i></a></td>
+                    <td><a onclick="deleteitem(${item.id})"><i class="bi bi-trash"></i></a></td>
                 `;
                         table.appendChild(row);
                     });
@@ -366,6 +365,30 @@ include 'sidbar.php';
             setTimeout(() => {
                 location.reload();
             }, 500); // Removed quotes around 500
+        }
+    </script>
+    <script>
+        function deleteC(id_client) {
+            alert('هل تريد حقا حذف؟');
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "delete_commande_locale.php?id=" + id_client, true);
+            xhttp.send();
+            setTimeout(() => {
+                location.reload();
+            }, "500");
+        }
+    </script>
+
+
+    <script>
+        function deleteitem(id_client) {
+            alert('هل تريد حقا حذف؟');
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "delete_item.php?id=" + id_client, true);
+            xhttp.send();
+            setTimeout(() => {
+                location.reload();
+            }, "500");
         }
     </script>
 

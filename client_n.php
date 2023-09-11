@@ -1,7 +1,7 @@
 <?php
-session_start();
 
 include 'config.php';
+include 'sidbar.php';
 
 if (!isset($_SESSION['user_name'])) {
     header('location:login_form.php');
@@ -46,7 +46,6 @@ if (isset($_POST['save'])) {
 }
 
 $select = mysqli_query($conn, "SELECT * FROM `client` WHERE `type_c` ='nouveau' ORDER BY id DESC");
-include 'sidbar.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

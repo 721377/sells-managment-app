@@ -16,11 +16,6 @@ if (isset($_GET['id'])) {
         } else {
             mysqli_stmt_bind_param($stmt, "i", $code);
             mysqli_stmt_execute($stmt);
-            if ($type == "livere") {
-                header('location:commande_livrer.php');
-            } else {
-                header('location:commande_normale.php');
-            }
         }
     } catch (Exception $e) {
         echo 'error';

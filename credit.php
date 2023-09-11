@@ -1,12 +1,12 @@
 <?php
-session_start();
 
 include 'config.php';
+include 'sidbar.php';
 
 if (!isset($_SESSION['user_name'])) {
     header('location:login_form.php');
 }
-$date = date('Y M D'); 
+$date = date('Y M D');
 $select_dis = mysqli_query($conn, "SELECT DISTINCT id_client FROM `article`;");
 
 while ($row_dis = mysqli_fetch_assoc($select_dis)) {
@@ -35,7 +35,6 @@ while ($row_dis = mysqli_fetch_assoc($select_dis)) {
 }
 
 
-include 'sidbar.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -203,6 +202,7 @@ include 'sidbar.php';
         sessionStorage.setItem("add", false);
     });
 </script>
+
 <script>
     function deleteC(id_client) {
         alert('هل تريد حقا حذف؟');
